@@ -3,8 +3,9 @@ package serve
 import (
 	"testing"
 
-	"github.com/flimzy/kivik/serve/conf"
 	"github.com/spf13/viper"
+
+	"github.com/go-kivik/kivikd/conf"
 )
 
 func TestBind(t *testing.T) {

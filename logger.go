@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/flimzy/kivik/serve/logger"
+	"github.com/go-kivik/kivikd/logger"
 )
 
 type statusWriter struct {

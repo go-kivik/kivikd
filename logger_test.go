@@ -10,7 +10,7 @@ import (
 
 	"github.com/flimzy/kivik/auth"
 	"github.com/flimzy/kivik/authdb"
-	"github.com/flimzy/kivik/serve/logger"
+	"github.com/go-kivik/kivikd/logger"
 )
 
 func TestLogger(t *testing.T) {

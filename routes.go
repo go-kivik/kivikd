@@ -8,8 +8,8 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 
-	"github.com/flimzy/kivik/serve/couchserver"
-	"github.com/flimzy/kivik/serve/logger"
+	"github.com/go-kivik/kivikd/couchserver"
+	"github.com/go-kivik/kivikd/logger"
 )
 
 func (s *Service) setupRoutes() (http.Handler, error) {

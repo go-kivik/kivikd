@@ -14,8 +14,8 @@ import (
 	"github.com/flimzy/kivik/auth"
 	"github.com/flimzy/kivik/authdb"
 	"github.com/flimzy/kivik/errors"
-	"github.com/flimzy/kivik/serve/conf"
-	"github.com/flimzy/kivik/serve/logger"
+	"github.com/go-kivik/kivikd/conf"
+	"github.com/go-kivik/kivikd/logger"
 )
 
 // Service defines a CouchDB-like service to serve. You will define one of these

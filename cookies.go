@@ -2,7 +2,7 @@ package serve
 
 import (
 	"github.com/flimzy/kivik/authdb"
-	"github.com/flimzy/kivik/serve/cookies"
+	"github.com/go-kivik/kivikd/cookies"
 )
 
 // CreateAuthToken hashes a user name, salt, timestamp, and the server secret
