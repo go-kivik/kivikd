@@ -13,15 +13,15 @@ function generate {
     go generate $(go list ./... | grep -v /vendor/)
 }
 
+generate
+
 case "$1" in
     "standard")
-        generate
     ;;
     "linter")
         go get -u gopkg.in/alecthomas/gometalinter.v1
         gometalinter.v1 --install
     ;;
     "coverage")
-        generate
     ;;
 esac

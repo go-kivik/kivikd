@@ -12,8 +12,6 @@ case "$1" in
         go test -race $(go list ./... | grep -v /vendor/)
     ;;
     "linter")
-        diff -u <(echo -n) <(gofmt -e -d $(find . -type f -name '*.go' -not -path "./vendor/*"))
-        go install # to make gotype (run by gometalinter) happy
         gometalinter.v1 --config .linter_test.json
         gometalinter.v1 --config .linter.json
     ;;
