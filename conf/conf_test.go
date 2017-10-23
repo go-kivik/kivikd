@@ -5,15 +5,17 @@ import (
 	"testing"
 )
 
+const testConfDir = "../test/conf"
+
 func TestLoadError(t *testing.T) {
-	_, err := Load("../../test/conf/serve.invalid")
+	_, err := Load(testConfDir + "/serve.invalid")
 	if err == nil || err.Error() != `Unsupported Config Type "invalid"` {
 		t.Errorf("Unexpected error: %s", err)
 	}
 }
 
 func TestLoad(t *testing.T) {
-	c, err := Load("../../test/conf/serve.toml")
+	c, err := Load(testConfDir + "/serve.toml")
 	if err != nil {
 		t.Errorf("Failed to load config: %s", err)
 	}
