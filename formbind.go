@@ -14,10 +14,10 @@ func BindParams(r *http.Request, i interface{}) error {
 	mtype, _, _ := mime.ParseMediaType(r.Header.Get("Content-Type"))
 	switch mtype {
 	case typeJSON:
-		defer r.Body.Close()
+		defer r.Body.Close() // nolint: errcheck
 		return json.NewDecoder(r.Body).Decode(i)
 	case typeForm:
-		defer r.Body.Close()
+		defer r.Body.Close() // nolint: errcheck
 		return form.NewDecoder(r.Body).Decode(i)
 	}
 	return errors.Errorf("unable to bind media type %s", mtype)

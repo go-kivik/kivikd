@@ -166,10 +166,10 @@ func (s *Service) Bind(addr string) error {
 }
 
 const (
-	typeJSON  = "application/json"
-	typeText  = "text/plain"
-	typeForm  = "application/x-www-form-urlencoded"
-	typeMForm = "multipart/form-data"
+	typeJSON = "application/json"
+	// typeText  = "text/plain"
+	typeForm = "application/x-www-form-urlencoded"
+	// typeMForm = "multipart/form-data"
 )
 
 type handler func(w http.ResponseWriter, r *http.Request) error
@@ -194,7 +194,7 @@ func reportError(w http.ResponseWriter, err error) {
 	} else {
 		short = strings.ToLower(http.StatusText(status))
 	}
-	json.NewEncoder(w).Encode(map[string]interface{}{
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{
 		"error":  short,
 		"reason": reason,
 	})
