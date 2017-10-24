@@ -1,4 +1,4 @@
-package serve
+package kivikd
 
 import (
 	"github.com/flimzy/kivik/authdb"
