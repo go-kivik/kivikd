@@ -10,7 +10,7 @@ import (
 	"github.com/flimzy/kivik/errors"
 )
 
-//go:generate go-bindata -pkg couchserver -nocompress -prefix files -o files.go files
+//go:generate go-bindata -pkg couchserver -nometadata -nocompress -prefix files -o files.go files
 
 // GetFavicon serves GET /favicon.ico
 func (h *Handler) GetFavicon() http.HandlerFunc {
