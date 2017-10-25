@@ -10,7 +10,6 @@ glide install
 
 function generate {
     go get -u github.com/jteeuwen/go-bindata/...
-    go generate $(go list ./... | grep -v /vendor/)
 }
 
 generate
