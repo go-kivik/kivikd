@@ -12,6 +12,7 @@ case "$1" in
         go test -race $(go list ./... | grep -v /vendor/)
     ;;
     "linter")
+        go generate $(go list ./... | grep -v /vendor/) && git diff --exit-code
         gometalinter.v1 --config .linter_test.json
         gometalinter.v1 --config .linter.json
     ;;
