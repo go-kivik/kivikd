@@ -1,10 +1,9 @@
 package couchserver
 
 import (
+	"context"
 	"net/http/httptest"
 	"testing"
-
-	"golang.org/x/net/context"
 
 	"github.com/flimzy/diff"
 	"github.com/flimzy/kivik/auth"
