@@ -182,10 +182,7 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func reportError(w http.ResponseWriter, err error) {
 	w.Header().Add("Content-Type", typeJSON)
-	status := errors.StatusCode(err)
-	if status == 0 {
-		status = 500
-	}
+	status := kivik.StatusCode(err)
 	w.WriteHeader(status)
 	short := err.Error()
 	reason := errors.Reason(err)
