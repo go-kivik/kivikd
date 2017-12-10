@@ -3,7 +3,7 @@ package kivikd
 import (
 	"testing"
 
-	"github.com/flimzy/kivik/authdb"
+	"github.com/go-kivik/kivikd/authdb"
 )
 
 type validateTest struct {
@@ -16,7 +16,9 @@ type validateTest struct {
 
 func TestValidateCookie(t *testing.T) {
 	s := &Service{}
-	s.loadConf()
+	if err := s.loadConf(); err != nil {
+		t.Fatal(err)
+	}
 	tests := []validateTest{
 		{Name: "Valid", Cookie: "YWRtaW46NThDNTQzN0Y6OnE2cBAuoQKvVBHF2l4PIqKHqDM", Valid: true,
 			User: &authdb.UserContext{Name: "admin", Salt: "foo bar baz"}},
@@ -52,7 +54,9 @@ type tokenTest struct {
 
 func TestCreateAuthToken(t *testing.T) {
 	s := &Service{}
-	s.loadConf()
+	if err := s.loadConf(); err != nil {
+		t.Fatal(err)
+	}
 	tests := []tokenTest{
 		{Name: "admin", Salt: "foo bar baz", Created: 1489322879, Expected: "YWRtaW46NThDNTQzN0Y6OnE2cBAuoQKvVBHF2l4PIqKHqDM"},
 		{Name: "bob", Salt: "0123456789abc", Created: 1489322879, Expected: "Ym9iOjU4QzU0MzdGOihHwWRLS2vekOgsRrH1cEVrk6za"},

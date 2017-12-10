@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/flimzy/kivik/auth"
+	"github.com/go-kivik/kivikd/auth"
 )
 
 type contextKey struct {

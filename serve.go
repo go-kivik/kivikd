@@ -11,9 +11,9 @@ import (
 	"sync"
 
 	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/auth"
-	"github.com/flimzy/kivik/authdb"
 	"github.com/flimzy/kivik/errors"
+	"github.com/go-kivik/kivikd/auth"
+	"github.com/go-kivik/kivikd/authdb"
 	"github.com/go-kivik/kivikd/conf"
 	"github.com/go-kivik/kivikd/logger"
 )

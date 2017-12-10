@@ -8,8 +8,8 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/flimzy/kivik/auth"
-	"github.com/flimzy/kivik/authdb"
+	"github.com/go-kivik/kivikd/auth"
+	"github.com/go-kivik/kivikd/authdb"
 	"github.com/go-kivik/kivikd/logger"
 )
 
@@ -24,7 +24,7 @@ func TestLogger(t *testing.T) {
 	w := httptest.NewRecorder()
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Go away!"))
+		_, _ = w.Write([]byte("Go away!"))
 	})
 	mw(handler).ServeHTTP(w, req)
 	expectedRE := regexp.MustCompile(`^192\.0\.2\.1 bob \[\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d.+] ` +
@@ -45,7 +45,7 @@ func TestLoggerNoAuth(t *testing.T) {
 	w := httptest.NewRecorder()
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Go away!"))
+		_, _ = w.Write([]byte("Go away!"))
 	})
 	mw(handler).ServeHTTP(w, req)
 	expectedRE := regexp.MustCompile(`^192\.0\.2\.1  \[\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d.+] ` +
