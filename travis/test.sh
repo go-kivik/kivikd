@@ -13,13 +13,12 @@ case "$1" in
     ;;
     "linter")
         go generate $(go list ./... | grep -v /vendor/) && git diff --exit-code
-        gometalinter.v1 --config .linter_test.json
         gometalinter.v1 --config .linter.json
     ;;
     "coverage")
         echo "" > coverage.txt
 
-        TEST_PKGS=$(find -name "*_test.go" | grep -v /vendor/ | xargs dirname | sort -u | sed -e "s#^\.#github.com/go-kivik/kivikd#" )
+        TEST_PKGS=$(go list ./...)
 
         for d in $TEST_PKGS; do
             go test -i $d
