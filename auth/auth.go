@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/flimzy/kivik/authdb"
+	"github.com/go-kivik/kivikd/authdb"
 )
 
 // Handler is an auth handler.

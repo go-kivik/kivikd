@@ -6,8 +6,9 @@ import (
 	"testing"
 
 	"github.com/flimzy/diff"
-	"github.com/flimzy/kivik/auth"
-	"github.com/flimzy/kivik/authdb"
+
+	"github.com/go-kivik/kivikd/auth"
+	"github.com/go-kivik/kivikd/authdb"
 )
 
 type testKey struct {

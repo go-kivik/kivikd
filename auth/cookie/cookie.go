@@ -11,10 +11,10 @@ import (
 	"time"
 
 	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/auth"
-	"github.com/flimzy/kivik/authdb"
 	"github.com/flimzy/kivik/errors"
 	"github.com/go-kivik/kivikd"
+	"github.com/go-kivik/kivikd/auth"
+	"github.com/go-kivik/kivikd/authdb"
 	"github.com/go-kivik/kivikd/cookies"
 )
 

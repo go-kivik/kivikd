@@ -7,10 +7,10 @@ import (
 	"testing"
 
 	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/authdb"
-	"github.com/flimzy/kivik/authdb/confadmin"
-	"github.com/flimzy/kivik/authdb/usersdb"
 	_ "github.com/go-kivik/couchdb"
+	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/kivikd/authdb/confadmin"
+	"github.com/go-kivik/kivikd/authdb/usersdb"
 	"github.com/go-kivik/kivikd/conf"
 	"github.com/go-kivik/kiviktest/kt"
 )

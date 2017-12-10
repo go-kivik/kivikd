@@ -1,7 +1,7 @@
 package kivikd
 
 import (
-	"github.com/flimzy/kivik/authdb"
+	"github.com/go-kivik/kivikd/authdb"
 	"github.com/go-kivik/kivikd/cookies"
 )
 

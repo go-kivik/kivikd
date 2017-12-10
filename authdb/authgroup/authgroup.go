@@ -6,8 +6,8 @@ import (
 	"context"
 
 	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/authdb"
 	"github.com/flimzy/kivik/errors"
+	"github.com/go-kivik/kivikd/authdb"
 )
 
 // AuthGroup is a group of auth handlers, to be tried in turn.

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/flimzy/kivik/auth"
+	"github.com/go-kivik/kivikd/auth"
 )
 
 // GetSession serves GET /_session

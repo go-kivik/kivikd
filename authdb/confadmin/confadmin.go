@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/authdb"
 	"github.com/flimzy/kivik/errors"
+	"github.com/go-kivik/kivikd/authdb"
 	"github.com/go-kivik/kivikd/conf"
 )
 

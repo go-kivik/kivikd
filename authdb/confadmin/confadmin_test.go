@@ -6,12 +6,12 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/flimzy/kivik"
-
-	"github.com/flimzy/kivik/authdb"
-	_ "github.com/go-kivik/couchdb"
-	"github.com/go-kivik/kivikd/conf"
 	"github.com/spf13/viper"
+
+	"github.com/flimzy/kivik"
+	_ "github.com/go-kivik/couchdb"
+	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/kivikd/conf"
 )
 
 func TestInvalidHashes(t *testing.T) {

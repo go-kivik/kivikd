@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/authdb"
 	_ "github.com/go-kivik/couchdb"
+	"github.com/go-kivik/kivikd/authdb"
 	"github.com/go-kivik/kiviktest/kt"
 )
 
