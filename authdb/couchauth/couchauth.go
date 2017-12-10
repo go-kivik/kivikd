@@ -1,5 +1,5 @@
 // Package couchauth provides auth services to a remote CouchDB server.
-package couchauth // import "github.com/flimzy/kivik/authdb/couchauth"
+package couchauth
 
 import (
 	"context"

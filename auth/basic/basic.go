@@ -1,5 +1,5 @@
 // Package basic provides HTTP Basic Auth services.
-package basic // import "github.com/flimzy/kivik/auth/basic"
+package basic
 
 import (
 	"net/http"
