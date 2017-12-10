@@ -21,6 +21,7 @@ type tuser struct {
 }
 
 func TestCouchAuth(t *testing.T) {
+	t.Skip("Reconfigure test not to require Docker")
 	client := kt.GetClient(t)
 	db, err := client.DB(context.Background(), "_users")
 	if err != nil {

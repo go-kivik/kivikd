@@ -27,6 +27,7 @@ func TestBadDSN(t *testing.T) {
 }
 
 func TestCouchAuth(t *testing.T) {
+	t.Skip("Reconfigure test not to require Docker")
 	client := kt.GetClient(t)
 	db, e := client.DB(context.Background(), "_users")
 	if e != nil {

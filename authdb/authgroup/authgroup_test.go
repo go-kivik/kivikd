@@ -24,6 +24,7 @@ type tuser struct {
 }
 
 func TestConfAdminAuth(t *testing.T) {
+	t.Skip("Reconfigure test not to require Docker")
 	// Set up first auth backend
 	c1 := conf.New()
 	c1.Set("admins.bob", "-pbkdf2-792221164f257de22ad72a8e94760388233e5714,7897f3451f59da741c87ec5f10fe7abe,10")
