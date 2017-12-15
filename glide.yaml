@@ -17,4 +17,10 @@ import:
 - package: github.com/flimzy/diff
   version: ~0.1.2
 - package: github.com/go-kivik/memorydb
-  version: ~0.0.1
+  version: master
+- package: github.com/go-kivik/couchdb
+  versoin: master
+- package: github.com/go-kivik/kiviktest
+  version: master
+- package: github.com/go-kivik/mango
+  version: master
