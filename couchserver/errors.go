@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/flimzy/kivik"
+	"github.com/go-kivik/kivik"
 )
 
 func errorDescription(status int) string {

@@ -6,9 +6,9 @@ import (
 	"encoding/json"
 	"net/url"
 
-	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/errors"
 	"github.com/go-kivik/couchdb/chttp"
+	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/errors"
 	"github.com/go-kivik/kivikd/authdb"
 )
 

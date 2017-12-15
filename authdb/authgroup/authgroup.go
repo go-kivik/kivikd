@@ -5,8 +5,8 @@ package authgroup
 import (
 	"context"
 
-	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/errors"
+	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/errors"
 	"github.com/go-kivik/kivikd/authdb"
 )
 

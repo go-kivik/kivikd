@@ -6,7 +6,8 @@ import (
 	"testing"
 
 	"github.com/flimzy/diff"
-	"github.com/flimzy/kivik"
+
+	"github.com/go-kivik/kivik"
 	_ "github.com/go-kivik/memorydb"
 )
 

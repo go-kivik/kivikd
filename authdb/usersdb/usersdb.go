@@ -8,8 +8,8 @@ import (
 
 	"golang.org/x/crypto/pbkdf2"
 
-	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/errors"
+	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/errors"
 	"github.com/go-kivik/kivikd/authdb"
 )
 

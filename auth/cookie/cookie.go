@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/errors"
+	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/errors"
 	"github.com/go-kivik/kivikd"
 	"github.com/go-kivik/kivikd/auth"
 	"github.com/go-kivik/kivikd/authdb"

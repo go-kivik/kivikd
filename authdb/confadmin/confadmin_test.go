@@ -8,8 +8,8 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/flimzy/kivik"
 	_ "github.com/go-kivik/couchdb"
+	"github.com/go-kivik/kivik"
 	"github.com/go-kivik/kivikd/authdb"
 	"github.com/go-kivik/kivikd/conf"
 )

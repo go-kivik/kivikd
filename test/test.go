@@ -11,8 +11,8 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/driver"
+	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/driver"
 	"github.com/go-kivik/kivikd"
 	"github.com/go-kivik/kivikd/auth"
 	"github.com/go-kivik/kivikd/auth/basic"
