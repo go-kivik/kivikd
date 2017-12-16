@@ -34,12 +34,8 @@ type user struct {
 }
 
 func (db *db) getUser(ctx context.Context, username string) (*user, error) {
-	row, err := db.Get(ctx, kivik.UserPrefix+username, nil)
-	if err != nil {
-		return nil, err
-	}
 	var u user
-	if err = row.ScanDoc(&u); err != nil {
+	if err := db.Get(ctx, kivik.UserPrefix+username, nil).ScanDoc(&u); err != nil {
 		return nil, err
 	}
 	return &u, nil
