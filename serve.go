@@ -10,8 +10,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/errors"
+	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/errors"
 	"github.com/go-kivik/kivikd/auth"
 	"github.com/go-kivik/kivikd/authdb"
 	"github.com/go-kivik/kivikd/conf"

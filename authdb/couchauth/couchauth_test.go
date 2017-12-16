@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/flimzy/kivik"
 	_ "github.com/go-kivik/couchdb"
+	"github.com/go-kivik/kivik"
 	"github.com/go-kivik/kiviktest/kt"
 )
 

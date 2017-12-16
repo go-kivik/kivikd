@@ -11,8 +11,8 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/flimzy/kivik"
-	"github.com/flimzy/kivik/driver"
+	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/driver"
 	"github.com/go-kivik/kivikd"
 	"github.com/go-kivik/kivikd/auth"
 	"github.com/go-kivik/kivikd/auth/basic"
@@ -106,7 +106,7 @@ func RegisterKivikdSuites() {
 		"ViewCleanup.skip":       true, // FIXME: Unimplemented
 		"Security.skip":          true, // FIXME: Unimplemented
 		"SetSecurity.skip":       true, // FIXME: Unimplemented
-		"Rev.skip":               true, // FIXME: When Get works
+		"GetMeta.skip":           true, // FIXME: When Get works
 		"DBUpdates.skip":         true, // FIXME: Unimplemented
 		"Changes.skip":           true, // FIXME: Unimplemented
 		"Copy.skip":              true, // FIXME: Unimplemented, depends on Get/Put or Copy
