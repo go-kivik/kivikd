@@ -8,7 +8,7 @@ import (
 // PutDB handles PUT /{db}
 func (h *Handler) PutDB() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if err := h.client.CreateDB(r.Context(), DB(r)); err != nil {
+		if _, err := h.client.CreateDB(r.Context(), DB(r)); err != nil {
 			h.HandleError(w, err)
 			return
 		}
@@ -74,7 +74,7 @@ func (h *Handler) Flush() http.HandlerFunc {
 		w.Header().Set("Content-Type", typeJSON)
 		h.HandleError(w, json.NewEncoder(w).Encode(map[string]interface{}{
 			"instance_start_time": 0,
-			"ok": true,
+			"ok":                  true,
 		}))
 	}
 }

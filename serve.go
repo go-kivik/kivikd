@@ -180,12 +180,23 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type reasoner interface {
+	Reason() string
+}
+
+func reason(err error) string {
+	if r, ok := err.(reasoner); ok {
+		return r.Reason()
+	}
+	return err.Error()
+}
+
 func reportError(w http.ResponseWriter, err error) {
 	w.Header().Add("Content-Type", typeJSON)
 	status := kivik.StatusCode(err)
 	w.WriteHeader(status)
 	short := err.Error()
-	reason := errors.Reason(err)
+	reason := reason(err)
 	if reason == "" {
 		reason = short
 	} else {

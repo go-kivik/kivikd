@@ -18,10 +18,10 @@ type tuser struct {
 }
 
 func TestBadDSN(t *testing.T) {
-	if _, err := New(context.Background(), "http://foo.com:port with spaces/"); err == nil {
+	if _, err := New("http://foo.com:port with spaces/"); err == nil {
 		t.Errorf("Expected error for invalid URL.")
 	}
-	if _, err := New(context.Background(), "http://foo:bar@foo.com/"); err == nil {
+	if _, err := New("http://foo:bar@foo.com/"); err == nil {
 		t.Error("Expected error for DSN with credentials.")
 	}
 }
@@ -46,7 +46,7 @@ func TestCouchAuth(t *testing.T) {
 		t.Fatalf("Failed to create user: %s", e)
 	}
 	defer db.Delete(context.Background(), user.ID, rev)
-	auth, e := New(context.Background(), kt.NoAuthDSN(t))
+	auth, e := New(kt.NoAuthDSN(t))
 	if e != nil {
 		t.Fatalf("Failed to connect to remote server: %s", e)
 	}
