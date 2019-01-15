@@ -3,7 +3,6 @@
 package test
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -130,18 +129,18 @@ type customDriver struct {
 	driver.Client
 }
 
-func (cd customDriver) NewClient(_ context.Context, _ string) (driver.Client, error) {
+func (cd customDriver) NewClient(_ string) (driver.Client, error) {
 	return cd, nil
 }
 
 // ServerTest tests the kivikd server
 func ServerTest(t *testing.T) {
-	memClient, err := kivik.New(context.Background(), "memory", "")
+	memClient, err := kivik.New("memory", "")
 	if err != nil {
 		t.Fatalf("Failed to connect to memory driver: %s", err)
 	}
 	kivik.Register("custom", customDriver{proxydb.NewClient(memClient)})
-	backend, err := kivik.New(context.Background(), "custom", "")
+	backend, err := kivik.New("custom", "")
 	if err != nil {
 		t.Fatalf("Failed to connect to custom driver: %s", err)
 	}

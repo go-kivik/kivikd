@@ -1,7 +1,6 @@
 package couchserver
 
 import (
-	"context"
 	"net/http/httptest"
 	"testing"
 
@@ -12,7 +11,7 @@ import (
 )
 
 func TestAllDBs(t *testing.T) {
-	client, err := kivik.New(context.Background(), "memory", "")
+	client, err := kivik.New("memory", "")
 	if err != nil {
 		panic(err)
 	}

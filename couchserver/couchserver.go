@@ -24,7 +24,7 @@ type db interface {
 
 type backend interface {
 	AllDBs(context.Context, ...kivik.Options) ([]string, error)
-	CreateDB(context.Context, string, ...kivik.Options) error
+	CreateDB(context.Context, string, ...kivik.Options) (*kivik.DB, error)
 	DB(context.Context, string, ...kivik.Options) (db, error)
 	DBExists(context.Context, string, ...kivik.Options) (bool, error)
 }
