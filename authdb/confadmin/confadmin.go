@@ -4,6 +4,7 @@ package confadmin
 
 import (
 	"context"
+	"net/http"
 	"strconv"
 	"strings"
 
@@ -25,15 +26,15 @@ func New(c *conf.Conf) authdb.UserStore {
 }
 
 func (c *confadmin) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
-	derivedKey, salt, iterations, err := c.getKeySaltIter(ctx, username)
+	derivedKey, salt, iterations, err := c.getKeySaltIter(username)
 	if err != nil {
-		if kivik.StatusCode(err) == kivik.StatusNotFound {
-			return nil, errors.Status(kivik.StatusUnauthorized, "unauthorized")
+		if kivik.StatusCode(err) == http.StatusNotFound {
+			return nil, errors.Status(http.StatusUnauthorized, "unauthorized")
 		}
 		return nil, errors.Wrap(err, "unrecognized password hash")
 	}
 	if !authdb.ValidatePBKDF2(password, salt, derivedKey, iterations) {
-		return nil, errors.Status(kivik.StatusUnauthorized, "unauthorized")
+		return nil, errors.Status(http.StatusUnauthorized, "unauthorized")
 	}
 	return &authdb.UserContext{
 		Name:  username,
@@ -44,10 +45,10 @@ func (c *confadmin) Validate(ctx context.Context, username, password string) (*a
 
 const hashPrefix = "-" + authdb.SchemePBKDF2 + "-"
 
-func (c *confadmin) getKeySaltIter(ctx context.Context, username string) (key, salt string, iterations int, err error) {
+func (c *confadmin) getKeySaltIter(username string) (key, salt string, iterations int, err error) {
 	confName := "admins." + username
 	if !c.IsSet(confName) {
-		return "", "", 0, errors.Status(kivik.StatusNotFound, "user not found")
+		return "", "", 0, errors.Status(http.StatusNotFound, "user not found")
 	}
 	hash := c.GetString(confName)
 	if !strings.HasPrefix(hash, hashPrefix) {
@@ -64,10 +65,10 @@ func (c *confadmin) getKeySaltIter(ctx context.Context, username string) (key, s
 }
 
 func (c *confadmin) UserCtx(ctx context.Context, username string) (*authdb.UserContext, error) {
-	_, salt, _, err := c.getKeySaltIter(ctx, username)
+	_, salt, _, err := c.getKeySaltIter(username)
 	if err != nil {
-		if kivik.StatusCode(err) == kivik.StatusNotFound {
-			return nil, errors.Status(kivik.StatusNotFound, "user does not exist")
+		if kivik.StatusCode(err) == http.StatusNotFound {
+			return nil, errors.Status(http.StatusNotFound, "user does not exist")
 		}
 		return nil, errors.Wrap(err, "unrecognized password hash")
 	}

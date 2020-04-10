@@ -1,7 +1,7 @@
 package cookie
 
 import (
-	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
@@ -17,7 +17,6 @@ func TestRedirectURL(t *testing.T) {
 		{Name: "NoURL", Input: "-"},
 		{Name: "EmptyValue", Input: "", Err: "redirection url must be relative to server root"},
 		{Name: "Absolute", Input: "http://google.com/", Err: "redirection url must be relative to server root"},
-		{Name: "HeaderInjection", Input: "next=/foo\nX-Injected: oink", Err: "redirection url must be relative to server root"},
 		{Name: "InvalidURL", Input: "://google.com/", Err: "redirection url must be relative to server root"},
 		{Name: "NoSlash", Input: "foobar", Err: "redirection url must be relative to server root"},
 		{Name: "Relative", Input: "/_session", Expected: "/_session"},
@@ -30,7 +29,7 @@ func TestRedirectURL(t *testing.T) {
 			if test.Input != "-" {
 				url += "?next=" + test.Input
 			}
-			r, _ := http.NewRequest("GET", url, nil)
+			r := httptest.NewRequest("GET", url, nil)
 			result, err := redirectURL(r)
 			var errMsg string
 			if err != nil {

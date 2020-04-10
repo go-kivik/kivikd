@@ -4,6 +4,7 @@ package authgroup
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/go-kivik/kivik"
 	"github.com/go-kivik/kivik/errors"
@@ -28,7 +29,7 @@ func (g AuthGroup) loop(ctx context.Context, fn func(authdb.UserStore) (*authdb.
 		if err == nil {
 			return uCtx, nil
 		}
-		if kivik.StatusCode(err) != kivik.StatusNotFound && firstErr == nil {
+		if kivik.StatusCode(err) != http.StatusNotFound && firstErr == nil {
 			firstErr = err
 		}
 		select {
@@ -39,7 +40,7 @@ func (g AuthGroup) loop(ctx context.Context, fn func(authdb.UserStore) (*authdb.
 		}
 	}
 	if firstErr == nil {
-		return nil, errors.Status(kivik.StatusNotFound, "user not found")
+		return nil, errors.Status(http.StatusNotFound, "user not found")
 	}
 	return nil, firstErr
 }

@@ -3,6 +3,7 @@ package authgroup
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"reflect"
 	"testing"
 
@@ -32,8 +33,8 @@ func TestConfAdminAuth(t *testing.T) {
 
 	// Set up second auth backend
 	client := kt.GetClient(t)
-	db, e := client.DB(context.Background(), "_users")
-	if e != nil {
+	db := client.DB(context.Background(), "_users")
+	if e := db.Err(); e != nil {
 		t.Fatalf("Failed to connect to db: %s", e)
 	}
 	name := kt.TestDBName(t)
@@ -69,7 +70,7 @@ func TestConfAdminAuth(t *testing.T) {
 			t.Run("BobInvalid", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), "bob", "foobar")
-				if kivik.StatusCode(err) != kivik.StatusUnauthorized {
+				if kivik.StatusCode(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad password, got %s", err)
 				}
 				if uCtx != nil {
@@ -89,7 +90,7 @@ func TestConfAdminAuth(t *testing.T) {
 			t.Run("TestUserInvalid", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), user.Name, "foobar")
-				if kivik.StatusCode(err) != kivik.StatusUnauthorized {
+				if kivik.StatusCode(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad password, got %s", err)
 				}
 				if uCtx != nil {
@@ -99,7 +100,7 @@ func TestConfAdminAuth(t *testing.T) {
 			t.Run("MissingUser", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), "nobody", "foo")
-				if kivik.StatusCode(err) != kivik.StatusUnauthorized {
+				if kivik.StatusCode(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad username, got %s", err)
 				}
 				if uCtx != nil {
@@ -131,7 +132,7 @@ func TestConfAdminAuth(t *testing.T) {
 			})
 			t.Run("MissingUser", func(t *testing.T) {
 				_, err := auth.UserCtx(context.Background(), "nobody")
-				if kivik.StatusCode(err) != kivik.StatusNotFound {
+				if kivik.StatusCode(err) != http.StatusNotFound {
 					var msg string
 					if err != nil {
 						msg = fmt.Sprintf(" Got: %s", err)

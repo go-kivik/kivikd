@@ -8,7 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/flimzy/diff"
+	"gitlab.com/flimzy/testy"
 
 	"github.com/go-kivik/kivik"
 	"github.com/go-kivik/kivik/errors"
@@ -18,16 +18,16 @@ type mockCreator struct {
 	backend
 }
 
-func (p *mockCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) (*kivik.DB, error) {
-	return nil, nil
+func (p *mockCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) error {
+	return nil
 }
 
 type errCreator struct {
 	backend
 }
 
-func (p *errCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) (*kivik.DB, error) {
-	return nil, errors.New("failure")
+func (p *errCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) error {
+	return errors.New("failure")
 }
 
 func TestPutDB(t *testing.T) {
@@ -40,7 +40,7 @@ func TestPutDB(t *testing.T) {
 		expected := map[string]interface{}{
 			"ok": true,
 		}
-		if d := diff.AsJSON(expected, resp.Body); d != nil {
+		if d := testy.DiffAsJSON(expected, resp.Body); d != nil {
 			t.Error(d)
 		}
 	})
@@ -143,7 +143,7 @@ func (c *errClient) DB(_ context.Context, _ string, _ ...kivik.Options) (db, err
 func TestGetDB(t *testing.T) {
 	t.Run("Endpoint exists for GET", func(t *testing.T) {
 		h := &Handler{client: &mockGetNotFound{}}
-		resp := callEndpointEndClose(h, "GET", "/exists")
+		resp := callEndpointEndClose(h, "/exists")
 		if resp.StatusCode == http.StatusMethodNotAllowed {
 			t.Error("Expected another response than method not allowed")
 		}
@@ -151,7 +151,7 @@ func TestGetDB(t *testing.T) {
 
 	t.Run("Not found", func(t *testing.T) {
 		h := &Handler{client: &mockGetNotFound{}}
-		resp := callEndpointEndClose(h, "GET", "/notexists")
+		resp := callEndpointEndClose(h, "/notexists")
 		if resp.StatusCode != http.StatusNotFound {
 			t.Errorf("Expected 404, got %s", resp.Status)
 		}
@@ -159,7 +159,7 @@ func TestGetDB(t *testing.T) {
 
 	t.Run("Found", func(t *testing.T) {
 		h := &Handler{client: &mockGetFound{}}
-		resp := callEndpointEndClose(h, "GET", "/asdf")
+		resp := callEndpointEndClose(h, "/asdf")
 		if resp.StatusCode != http.StatusOK {
 			t.Errorf("Expected 200, got %s", resp.Status)
 		}
@@ -167,7 +167,7 @@ func TestGetDB(t *testing.T) {
 
 	t.Run("Error", func(t *testing.T) {
 		h2 := &Handler{client: &errClient{}}
-		resp := callEndpointEndClose(h2, "GET", "/error")
+		resp := callEndpointEndClose(h2, "/error")
 		if resp.StatusCode != http.StatusInternalServerError {
 			t.Errorf("Expected 500, got %s", resp.Status)
 		}
@@ -192,7 +192,7 @@ func TestGetDB(t *testing.T) {
 			t.Errorf("JSON error, %s", err)
 		}
 		expected := testStats
-		if difftext := diff.AsJSON(expected, body); difftext != nil {
+		if difftext := testy.DiffAsJSON(expected, body); difftext != nil {
 			t.Error(difftext)
 		}
 	})
@@ -207,8 +207,8 @@ func callEndpoint(h *Handler, method string, path string) *http.Response {
 	return resp
 }
 
-func callEndpointEndClose(h *Handler, method string, path string) *http.Response {
-	resp := callEndpoint(h, method, path)
+func callEndpointEndClose(h *Handler, path string) *http.Response {
+	resp := callEndpoint(h, http.MethodGet, path)
 	resp.Body.Close()
 	return resp
 }

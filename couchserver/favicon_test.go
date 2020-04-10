@@ -16,7 +16,9 @@ func TestFavicoDefault(t *testing.T) {
 	resp := w.Result()
 	defer resp.Body.Close()
 	buf := &bytes.Buffer{}
-	buf.ReadFrom(resp.Body)
+	if _, err := buf.ReadFrom(resp.Body); err != nil {
+		t.Fatal(err)
+	}
 	expected, err := Asset("favicon.ico")
 	if err != nil {
 		panic(err)
@@ -48,7 +50,9 @@ func TestFavicoExternalFile(t *testing.T) {
 	resp := w.Result()
 	defer resp.Body.Close()
 	buf := &bytes.Buffer{}
-	buf.ReadFrom(resp.Body)
+	if _, err := buf.ReadFrom(resp.Body); err != nil {
+		t.Fatal(err)
+	}
 	expected, err := Asset("favicon.ico")
 	if err != nil {
 		panic(err)

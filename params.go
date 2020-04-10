@@ -1,6 +1,8 @@
 package kivikd
 
-import "net/http"
+import (
+	"net/http"
+)
 
 // StringQueryParam extracts a query parameter as string.
 func StringQueryParam(r *http.Request, key string) (string, bool) {

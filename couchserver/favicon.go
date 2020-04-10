@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/go-kivik/kivik"
 	"github.com/go-kivik/kivik/errors"
 )
 
@@ -26,7 +25,7 @@ func (h *Handler) GetFavicon() http.HandlerFunc {
 			file, err := os.Open(h.Favicon)
 			if err != nil {
 				if os.IsNotExist(err) {
-					err = errors.Status(kivik.StatusNotFound, "not found")
+					err = errors.Status(http.StatusNotFound, "not found")
 				}
 				h.HandleError(w, err)
 				return

@@ -3,6 +3,7 @@ package kivikd
 import (
 	"context"
 	"encoding/json"
+	errs "errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -172,21 +173,10 @@ const (
 	// typeMForm = "multipart/form-data"
 )
 
-type handler func(w http.ResponseWriter, r *http.Request) error
-
-func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h(w, r); err != nil {
-		reportError(w, err)
-	}
-}
-
-type reasoner interface {
-	Reason() string
-}
-
 func reason(err error) string {
-	if r, ok := err.(reasoner); ok {
-		return r.Reason()
+	kerr := new(kivik.Error)
+	if errs.As(err, &kerr) {
+		return kerr.Message
 	}
 	return err.Error()
 }

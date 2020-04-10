@@ -33,8 +33,7 @@ func (f Fields) Exists(key string) bool {
 
 // Get returns the value associated with a key.
 func (f Fields) Get(key string) interface{} {
-	v, _ := f[key]
-	return v
+	return f[key]
 }
 
 // GetString returns a value as a string, or "-"

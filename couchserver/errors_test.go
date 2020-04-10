@@ -6,17 +6,11 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
-	"github.com/flimzy/diff"
+	"github.com/go-kivik/kivik"
+	"gitlab.com/flimzy/testy"
 )
-
-type reasonError int
-
-func (e reasonError) Error() string   { return "test error" }
-func (e reasonError) StatusCode() int { return 404 }
-func (e reasonError) Reason() string  { return "it ain't there" }
 
 func TestHandleError(t *testing.T) {
 	h := Handler{}
@@ -39,8 +33,8 @@ func TestHandleError(t *testing.T) {
 			},
 		},
 		{
-			Name: "ReasonError",
-			Err:  reasonError(0),
+			Name: "kivik error",
+			Err:  &kivik.Error{HTTPStatus: http.StatusNotFound, Message: "it ain't there"},
 			Expected: map[string]string{
 				"error":  "not_found",
 				"reason": "it ain't there",
@@ -54,7 +48,7 @@ func TestHandleError(t *testing.T) {
 				h.HandleError(w, test.Err)
 				resp := w.Result()
 				defer resp.Body.Close()
-				if d := diff.AsJSON(test.Expected, resp.Body); d != nil {
+				if d := testy.DiffAsJSON(test.Expected, resp.Body); d != nil {
 					t.Error(d)
 				}
 			})
@@ -68,10 +62,6 @@ type errorResponseWriter struct {
 
 func (w *errorResponseWriter) Write(_ []byte) (int, error) {
 	return 0, errors.New("unusual write error")
-}
-
-type fileResponseWriter struct {
-	f *os.File
 }
 
 func TestHandleErrorFailure(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/flimzy/diff"
+	"gitlab.com/flimzy/testy"
 )
 
 func TestFields(t *testing.T) {
@@ -118,7 +118,7 @@ func TestLogger(t *testing.T) {
 				buf := &bytes.Buffer{}
 				l := New(buf)
 				test.Func(l)
-				if d := diff.Text(test.Expected, buf.String()); d != nil {
+				if d := testy.DiffText(test.Expected, buf.String()); d != nil {
 					t.Error(d)
 				}
 			})

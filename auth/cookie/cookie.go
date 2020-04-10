@@ -3,7 +3,6 @@
 package cookie
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/url"
@@ -34,16 +33,16 @@ func (a *Auth) MethodName() string {
 func (a *Auth) Authenticate(w http.ResponseWriter, r *http.Request) (*authdb.UserContext, error) {
 	if r.URL.Path == "/_session" {
 		switch r.Method {
-		case kivik.MethodPost:
+		case http.MethodPost:
 			return nil, postSession(w, r)
-		case kivik.MethodDelete:
-			return nil, deleteSession(w, r)
+		case http.MethodDelete:
+			return nil, deleteSession(w)
 		}
 	}
-	return a.validateCookie(w, r)
+	return a.validateCookie(r)
 }
 
-func (a *Auth) validateCookie(w http.ResponseWriter, r *http.Request) (*authdb.UserContext, error) {
+func (a *Auth) validateCookie(r *http.Request) (*authdb.UserContext, error) {
 	store := kivikd.GetService(r).UserStore
 	cookie, err := r.Cookie(kivik.SessionCookieName)
 	if err != nil {
@@ -72,10 +71,10 @@ func postSession(w http.ResponseWriter, r *http.Request) error {
 		Password string  `form:"password" json:"password"`
 	}{}
 	if err := kivikd.BindParams(r, &authData); err != nil {
-		return errors.Status(kivik.StatusBadRequest, "unable to parse request data")
+		return errors.Status(http.StatusBadRequest, "unable to parse request data")
 	}
 	if authData.Name == nil {
-		return errors.Status(kivik.StatusBadRequest, "request body must contain a username")
+		return errors.Status(http.StatusBadRequest, "request body must contain a username")
 	}
 	s := kivikd.GetService(r)
 	user, err := s.UserStore.Validate(r.Context(), *authData.Name, authData.Password)
@@ -97,13 +96,13 @@ func postSession(w http.ResponseWriter, r *http.Request) error {
 		Name:     kivik.SessionCookieName,
 		Value:    token,
 		Path:     "/",
-		MaxAge:   getSessionTimeout(r.Context(), s),
+		MaxAge:   getSessionTimeout(s),
 		HttpOnly: true,
 	})
 	w.Header().Add("Content-Type", typeJSON)
 	if next != "" {
 		w.Header().Add("Location", next)
-		w.WriteHeader(kivik.StatusFound)
+		w.WriteHeader(http.StatusFound)
 	}
 	return json.NewEncoder(w).Encode(map[string]interface{}{
 		"ok":    true,
@@ -118,20 +117,20 @@ func redirectURL(r *http.Request) (string, error) {
 		return "", nil
 	}
 	if !strings.HasPrefix(next, "/") {
-		return "", errors.Status(kivik.StatusBadRequest, "redirection url must be relative to server root")
+		return "", errors.Status(http.StatusBadRequest, "redirection url must be relative to server root")
 	}
 	if strings.HasPrefix(next, "//") {
 		// Possible schemaless url
-		return "", errors.Status(kivik.StatusBadRequest, "invalid redirection url")
+		return "", errors.Status(http.StatusBadRequest, "invalid redirection url")
 	}
 	parsed, err := url.Parse(next)
 	if err != nil {
-		return "", errors.Status(kivik.StatusBadRequest, "invalid redirection url")
+		return "", errors.Status(http.StatusBadRequest, "invalid redirection url")
 	}
 	return parsed.String(), nil
 }
 
-func deleteSession(w http.ResponseWriter, r *http.Request) error {
+func deleteSession(w http.ResponseWriter) error {
 	http.SetCookie(w, &http.Cookie{
 		Name:     kivik.SessionCookieName,
 		Value:    "",
@@ -146,7 +145,7 @@ func deleteSession(w http.ResponseWriter, r *http.Request) error {
 	})
 }
 
-func getSessionTimeout(ctx context.Context, s *kivikd.Service) int {
+func getSessionTimeout(s *kivikd.Service) int {
 	if s.Conf().IsSet("couch_httpd_auth.timeout") {
 		return s.Conf().GetInt("couch_httpd_auth.timeout")
 	}

@@ -8,7 +8,7 @@ import (
 // PutDB handles PUT /{db}
 func (h *Handler) PutDB() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if _, err := h.client.CreateDB(r.Context(), DB(r)); err != nil {
+		if err := h.client.CreateDB(r.Context(), DB(r)); err != nil {
 			h.HandleError(w, err)
 			return
 		}

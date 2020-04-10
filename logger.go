@@ -38,7 +38,7 @@ func loggerMiddleware(rlog logger.RequestLogger) func(http.Handler) http.Handler
 			fields := logger.Fields{
 				logger.FieldUsername:     username,
 				logger.FieldTimestamp:    start,
-				logger.FieldElapsedTime:  time.Now().Sub(start),
+				logger.FieldElapsedTime:  time.Since(start),
 				logger.FieldResponseSize: sw.byteCount,
 			}
 			rlog.Log(r, sw.status, fields)
