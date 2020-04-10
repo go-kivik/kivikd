@@ -3,6 +3,7 @@ package kivikd
 import (
 	"context"
 	"encoding/json"
+	errs "errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -185,8 +186,9 @@ type reasoner interface {
 }
 
 func reason(err error) string {
-	if r, ok := err.(reasoner); ok {
-		return r.Reason()
+	kerr := new(kivik.Error)
+	if errs.As(err, &kerr) {
+		return kerr.Message
 	}
 	return err.Error()
 }
