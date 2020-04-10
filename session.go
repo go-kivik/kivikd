@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/go-kivik/kivikd/auth"
+	"github.com/go-kivik/kivikd/v3/auth"
 )
 
 // DefaultInsecureSecret is the hash secret used if couch_httpd_auth.secret

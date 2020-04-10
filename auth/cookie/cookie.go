@@ -9,12 +9,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kivik/errors"
-	"github.com/go-kivik/kivikd"
-	"github.com/go-kivik/kivikd/auth"
-	"github.com/go-kivik/kivikd/authdb"
-	"github.com/go-kivik/kivikd/cookies"
+	"github.com/go-kivik/kivik/v3"
+	"github.com/go-kivik/kivik/v3/errors"
+	"github.com/go-kivik/kivikd/v3"
+	"github.com/go-kivik/kivikd/v3/auth"
+	"github.com/go-kivik/kivikd/v3/authdb"
+	"github.com/go-kivik/kivikd/v3/cookies"
 )
 
 const typeJSON = "application/json"

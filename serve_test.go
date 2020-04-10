@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/go-kivik/kivikd/conf"
+	"github.com/go-kivik/kivikd/v3/conf"
 )
 
 func TestBind(t *testing.T) {

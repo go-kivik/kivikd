@@ -7,13 +7,13 @@ import (
 	"reflect"
 	"testing"
 
-	_ "github.com/go-kivik/couchdb"
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kivikd/authdb"
-	"github.com/go-kivik/kivikd/authdb/confadmin"
-	"github.com/go-kivik/kivikd/authdb/usersdb"
-	"github.com/go-kivik/kivikd/conf"
-	"github.com/go-kivik/kiviktest/kt"
+	_ "github.com/go-kivik/couchdb/v3"
+	"github.com/go-kivik/kivik/v3"
+	"github.com/go-kivik/kivikd/v3/authdb"
+	"github.com/go-kivik/kivikd/v3/authdb/confadmin"
+	"github.com/go-kivik/kivikd/v3/authdb/usersdb"
+	"github.com/go-kivik/kivikd/v3/conf"
+	"github.com/go-kivik/kiviktest/v3/kt"
 )
 
 type tuser struct {

@@ -9,9 +9,9 @@ import (
 
 	"golang.org/x/crypto/pbkdf2"
 
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kivik/errors"
-	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/kivik/v3"
+	"github.com/go-kivik/kivik/v3/errors"
+	"github.com/go-kivik/kivikd/v3/authdb"
 )
 
 type db struct {
