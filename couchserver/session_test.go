@@ -5,10 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/flimzy/diff"
-
 	"github.com/go-kivik/kivikd/auth"
 	"github.com/go-kivik/kivikd/authdb"
+	"gitlab.com/flimzy/testy"
 )
 
 type testKey struct {
@@ -46,7 +45,7 @@ func TestGetSession(t *testing.T) {
 	}
 	resp := w.Result()
 	defer resp.Body.Close()
-	if d := diff.AsJSON(expected, resp.Body); d != nil {
+	if d := testy.DiffAsJSON(expected, resp.Body); d != nil {
 		t.Error(d)
 	}
 }

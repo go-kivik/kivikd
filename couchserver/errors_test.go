@@ -9,8 +9,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/flimzy/diff"
 	"github.com/go-kivik/kivik"
+	"gitlab.com/flimzy/testy"
 )
 
 func TestHandleError(t *testing.T) {
@@ -49,7 +49,7 @@ func TestHandleError(t *testing.T) {
 				h.HandleError(w, test.Err)
 				resp := w.Result()
 				defer resp.Body.Close()
-				if d := diff.AsJSON(test.Expected, resp.Body); d != nil {
+				if d := testy.DiffAsJSON(test.Expected, resp.Body); d != nil {
 					t.Error(d)
 				}
 			})

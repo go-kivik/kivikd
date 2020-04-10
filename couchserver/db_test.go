@@ -8,7 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/flimzy/diff"
+	"gitlab.com/flimzy/testy"
 
 	"github.com/go-kivik/kivik"
 	"github.com/go-kivik/kivik/errors"
@@ -40,7 +40,7 @@ func TestPutDB(t *testing.T) {
 		expected := map[string]interface{}{
 			"ok": true,
 		}
-		if d := diff.AsJSON(expected, resp.Body); d != nil {
+		if d := testy.DiffAsJSON(expected, resp.Body); d != nil {
 			t.Error(d)
 		}
 	})
@@ -192,7 +192,7 @@ func TestGetDB(t *testing.T) {
 			t.Errorf("JSON error, %s", err)
 		}
 		expected := testStats
-		if difftext := diff.AsJSON(expected, body); difftext != nil {
+		if difftext := testy.DiffAsJSON(expected, body); difftext != nil {
 			t.Error(difftext)
 		}
 	})

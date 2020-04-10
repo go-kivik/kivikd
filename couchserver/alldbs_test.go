@@ -4,10 +4,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/flimzy/diff"
-
 	"github.com/go-kivik/kivik"
 	_ "github.com/go-kivik/memorydb"
+	"gitlab.com/flimzy/testy"
 )
 
 func TestAllDBs(t *testing.T) {
@@ -23,7 +22,7 @@ func TestAllDBs(t *testing.T) {
 	resp := w.Result()
 	defer resp.Body.Close()
 	expected := []string{}
-	if d := diff.AsJSON(expected, resp.Body); d != nil {
+	if d := testy.DiffAsJSON(expected, resp.Body); d != nil {
 		t.Error(d)
 	}
 }

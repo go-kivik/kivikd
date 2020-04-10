@@ -4,7 +4,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/flimzy/diff"
+	"gitlab.com/flimzy/testy"
 )
 
 func TestGetRoot(t *testing.T) {
@@ -27,7 +27,7 @@ func TestGetRoot(t *testing.T) {
 			"name":    "Acme",
 		},
 	}
-	if d := diff.AsJSON(expected, resp.Body); d != nil {
+	if d := testy.DiffAsJSON(expected, resp.Body); d != nil {
 		t.Error(d)
 	}
 }
