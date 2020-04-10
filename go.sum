@@ -23,9 +23,6 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/dgryski/go-sip13 v0.0.0-20181026042036-e10d5fee7954/go.mod h1:vAd38F8PWV+bWy6jNmig1y/TA+kYO4g3RSRF0IAv0no=
 github.com/flimzy/diff v0.1.5/go.mod h1:lFJtC7SPsK0EroDmGTSrdtWKAxOk3rO+q+e04LL05Hs=
-github.com/flimzy/diff v0.1.6/go.mod h1:lFJtC7SPsK0EroDmGTSrdtWKAxOk3rO+q+e04LL05Hs=
-github.com/flimzy/diff v0.1.7 h1:DRbd+lN3lY1xVuQrfqvDNsqBwA6RMbClMs6tS5sqWWk=
-github.com/flimzy/diff v0.1.7/go.mod h1:lFJtC7SPsK0EroDmGTSrdtWKAxOk3rO+q+e04LL05Hs=
 github.com/flimzy/testy v0.1.17-0.20190521133342-95b386c3ece6/go.mod h1:3szguN8NXqgq9bt9Gu8TQVj698PJWmyx/VY1frwwKrM=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
@@ -41,10 +38,10 @@ github.com/go-kivik/kivik/v3 v3.0.2/go.mod h1:chqVuHKAU9j2C7qL0cAH2FCO26oL+0B4aI
 github.com/go-kivik/kiviktest/v3 v3.0.0/go.mod h1:pLjkg/F61+X4Ks1BpbrTgbChjdPcINX2HysR8i7AfBM=
 github.com/go-kivik/kiviktest/v3 v3.0.1 h1:cL1XvG0DZ0oEAsrWa3Tgi8sa/0eNyHYJatFfble3x+4=
 github.com/go-kivik/kiviktest/v3 v3.0.1/go.mod h1:pLjkg/F61+X4Ks1BpbrTgbChjdPcINX2HysR8i7AfBM=
-github.com/go-kivik/mango v0.0.2 h1:SfvPxNIZMyIPHEt1zIZSB+XYM49Kx1+Pm0jdQ7U5Iu0=
-github.com/go-kivik/mango v0.0.2/go.mod h1:uUfIkOFYHi5+WymCb5I8ZBasKh0PSDdhvt0fwZSi2pY=
-github.com/go-kivik/memorydb/v3 v3.0.0 h1:0Z/jcBcjlvJ0CQ5oB2vedQECek5Ob6xjswsj9pRNpDY=
-github.com/go-kivik/memorydb/v3 v3.0.0/go.mod h1:UH27WXXc3IH+18H+kEL/IBJXYLcPIWbgrgjxYvjdqRk=
+github.com/go-kivik/mango v0.0.3 h1:WCCKDcuUaIcCsxgidTbC2w2eN5MgWObR5G66RAkyXZo=
+github.com/go-kivik/mango v0.0.3/go.mod h1:3DxCozHo310WkQskSMJHRRqZKnIVlnp0XY6BoIESIzY=
+github.com/go-kivik/memorydb/v3 v3.0.1 h1:gwFJJjuBccEmH3+D63gNrk7c6a2KunwirSO01EOvV54=
+github.com/go-kivik/memorydb/v3 v3.0.1/go.mod h1:huK6PWK1D0fDcG38obDQp5fNVEwQyTQw8LKZSb/M8gQ=
 github.com/go-kivik/proxydb/v3 v3.0.0 h1:1cqTA69vK1i4gudeLtkOwV4NTutHPzdEo3fPp6CaJFA=
 github.com/go-kivik/proxydb/v3 v3.0.0/go.mod h1:bxdgr6P8mnSejGk7hNuqzkESFNPm8g982RWm6E/F4f0=
 github.com/go-logfmt/logfmt v0.3.0/go.mod h1:Qt1PoO58o5twSAckw1HlFXLmHsOX5/0LbT9GBnD5lWE=
