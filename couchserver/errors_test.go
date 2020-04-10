@@ -10,13 +10,8 @@ import (
 	"testing"
 
 	"github.com/flimzy/diff"
+	"github.com/go-kivik/kivik"
 )
-
-type reasonError int
-
-func (e reasonError) Error() string   { return "test error" }
-func (e reasonError) StatusCode() int { return 404 }
-func (e reasonError) Reason() string  { return "it ain't there" }
 
 func TestHandleError(t *testing.T) {
 	h := Handler{}
@@ -39,8 +34,8 @@ func TestHandleError(t *testing.T) {
 			},
 		},
 		{
-			Name: "ReasonError",
-			Err:  reasonError(0),
+			Name: "kivik error",
+			Err:  &kivik.Error{HTTPStatus: http.StatusNotFound, Message: "it ain't there"},
 			Expected: map[string]string{
 				"error":  "not_found",
 				"reason": "it ain't there",

@@ -2,6 +2,7 @@ package couchserver
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -36,9 +37,16 @@ func (h *Handler) HandleError(w http.ResponseWriter, err error) {
 	}
 	status := kivik.StatusCode(err)
 	w.WriteHeader(status)
+	var reason string
+	kerr := new(kivik.Error)
+	if errors.As(err, &kerr) {
+		reason = kerr.Message
+	} else {
+		reason = err.Error()
+	}
 	wErr := json.NewEncoder(w).Encode(couchError{
 		Error:  errorDescription(status),
-		Reason: kivik.Reason(err),
+		Reason: reason,
 	})
 	if wErr != nil {
 		h.Logger.Printf("Failed to send send error: %s", wErr)

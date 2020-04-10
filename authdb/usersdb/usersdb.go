@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha1"
 	"fmt"
+	"net/http"
 
 	"golang.org/x/crypto/pbkdf2"
 
@@ -44,8 +45,8 @@ func (db *db) getUser(ctx context.Context, username string) (*user, error) {
 func (db *db) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
 	u, err := db.getUser(ctx, username)
 	if err != nil {
-		if kivik.StatusCode(err) == kivik.StatusNotFound {
-			err = errors.Status(kivik.StatusUnauthorized, "unauthorized")
+		if kivik.StatusCode(err) == http.StatusNotFound {
+			err = errors.Status(http.StatusUnauthorized, "unauthorized")
 		}
 		return nil, err
 	}
@@ -59,7 +60,7 @@ func (db *db) Validate(ctx context.Context, username, password string) (*authdb.
 	}
 	key := fmt.Sprintf("%x", pbkdf2.Key([]byte(password), []byte(u.Salt), u.Iterations, authdb.PBKDF2KeyLength, sha1.New))
 	if key != u.DerivedKey {
-		return nil, errors.Status(kivik.StatusUnauthorized, "unauthorized")
+		return nil, errors.Status(http.StatusUnauthorized, "unauthorized")
 	}
 	return &authdb.UserContext{
 		Name:  u.Name,

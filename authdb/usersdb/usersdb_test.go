@@ -3,6 +3,7 @@ package usersdb
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"reflect"
 	"testing"
 
@@ -23,8 +24,8 @@ type tuser struct {
 func TestCouchAuth(t *testing.T) {
 	t.Skip("Reconfigure test not to require Docker")
 	client := kt.GetClient(t)
-	db, err := client.DB(context.Background(), "_users")
-	if err != nil {
+	db := client.DB(context.Background(), "_users")
+	if err := db.Err(); err != nil {
 		t.Fatalf("Failed to connect to db: %s", err)
 	}
 	name := kt.TestDBName(t)
@@ -55,7 +56,7 @@ func TestCouchAuth(t *testing.T) {
 			})
 			t.Run("WrongPassword", func(t *testing.T) {
 				uCtx, err := auth.Validate(context.Background(), user.Name, "foobar")
-				if kivik.StatusCode(err) != kivik.StatusUnauthorized {
+				if kivik.StatusCode(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized password, got %s", err)
 				}
 				if uCtx != nil {
@@ -65,7 +66,7 @@ func TestCouchAuth(t *testing.T) {
 			t.Run("MissingUser", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), "nobody", "foo")
-				if kivik.StatusCode(err) != kivik.StatusUnauthorized {
+				if kivik.StatusCode(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad username, got %s", err)
 				}
 				if uCtx != nil {
@@ -90,7 +91,7 @@ func TestCouchAuth(t *testing.T) {
 			t.Run("MissingUser", func(t *testing.T) {
 				t.Parallel()
 				_, err := auth.UserCtx(context.Background(), "nobody")
-				if kivik.StatusCode(err) != kivik.StatusNotFound {
+				if kivik.StatusCode(err) != http.StatusNotFound {
 					var msg string
 					if err != nil {
 						msg = fmt.Sprintf(" Got: %s", err)

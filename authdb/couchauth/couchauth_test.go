@@ -2,6 +2,7 @@ package couchauth
 
 import (
 	"context"
+	"net/http"
 	"testing"
 
 	_ "github.com/go-kivik/couchdb"
@@ -29,8 +30,8 @@ func TestBadDSN(t *testing.T) {
 func TestCouchAuth(t *testing.T) {
 	t.Skip("Reconfigure test not to require Docker")
 	client := kt.GetClient(t)
-	db, e := client.DB(context.Background(), "_users")
-	if e != nil {
+	db := client.DB(context.Background(), "_users")
+	if e := db.Err(); e != nil {
 		t.Fatalf("Failed to connect to db: %s", e)
 	}
 	name := kt.TestDBName(t)
@@ -66,7 +67,7 @@ func TestCouchAuth(t *testing.T) {
 			t.Run("WrongPassword", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), user.Name, "foobar")
-				if kivik.StatusCode(err) != kivik.StatusUnauthorized {
+				if kivik.StatusCode(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad password, got %s", err)
 				}
 				if uCtx != nil {
@@ -76,7 +77,7 @@ func TestCouchAuth(t *testing.T) {
 			t.Run("MissingUser", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), "nobody", "foo")
-				if kivik.StatusCode(err) != kivik.StatusUnauthorized {
+				if kivik.StatusCode(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad username, got %s", err)
 				}
 				if uCtx != nil {
@@ -94,7 +95,7 @@ func TestCouchAuth(t *testing.T) {
 	// 	t.Errorf("Got unexpected roles.")
 	// }
 	// _, err = auth.Roles(context.Background(), "nobody")
-	// if errors.StatusCode(err) != kivik.StatusNotFound {
+	// if errors.StatusCode(err) != http.StatusNotFound {
 	// 	var msg string
 	// 	if err != nil {
 	// 		msg = fmt.Sprintf(" Got: %s", err)

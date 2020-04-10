@@ -64,8 +64,8 @@ func RegisterKivikdSuites() {
 		"Put.skip": true, // FIXME: Fix this when we can write docs
 
 		"Flush.databases":                     []string{"chicken"},
-		"Flush/Admin/chicken/DoFlush.status":  kivik.StatusNotFound, // FIXME: Update when implemented
-		"Flush/NoAuth/chicken/DoFlush.status": kivik.StatusNotFound, // FIXME: Update when implemented
+		"Flush/Admin/chicken/DoFlush.status":  http.StatusNotFound, // FIXME: Update when implemented
+		"Flush/NoAuth/chicken/DoFlush.status": http.StatusNotFound, // FIXME: Update when implemented
 
 		"Delete.skip": true, // FIXME: Fix this when we can delete docs.
 
@@ -80,24 +80,24 @@ func RegisterKivikdSuites() {
 		"Session/Get/NoAuth.userCtx.roles":                "",
 		"Session/Get/NoAuth.ok":                           "true",
 
-		"Session/Post/EmptyJSON.status":                               kivik.StatusBadRequest,
-		"Session/Post/BogusTypeJSON.status":                           kivik.StatusBadRequest,
-		"Session/Post/BogusTypeForm.status":                           kivik.StatusBadRequest,
-		"Session/Post/EmptyForm.status":                               kivik.StatusBadRequest,
-		"Session/Post/BadJSON.status":                                 kivik.StatusBadRequest,
-		"Session/Post/BadForm.status":                                 kivik.StatusBadRequest,
-		"Session/Post/MeaninglessJSON.status":                         kivik.StatusBadRequest,
-		"Session/Post/MeaninglessForm.status":                         kivik.StatusBadRequest,
-		"Session/Post/GoodJSON.status":                                kivik.StatusUnauthorized,
-		"Session/Post/BadQueryParam.status":                           kivik.StatusUnauthorized,
-		"Session/Post/BadCredsJSON.status":                            kivik.StatusUnauthorized,
-		"Session/Post/BadCredsForm.status":                            kivik.StatusUnauthorized,
-		"Session/Post/GoodCredsJSONRemoteRedirAbsolute.status":        kivik.StatusBadRequest,
-		"Session/Post/GoodCredsJSONRedirRelativeNoSlash.status":       kivik.StatusBadRequest,
-		"Session/Post/GoodCredsJSONRemoteRedirHeaderInjection.status": kivik.StatusBadRequest,
-		"Session/Post/GoodCredsJSONRemoteRedirInvalidURL.status":      kivik.StatusBadRequest,
-		"Session/Post/GoodCredsJSONRedirEmpty.status":                 kivik.StatusBadRequest,
-		"Session/Post/GoodCredsJSONRedirSchemaless.status":            kivik.StatusBadRequest,
+		"Session/Post/EmptyJSON.status":                               http.StatusBadRequest,
+		"Session/Post/BogusTypeJSON.status":                           http.StatusBadRequest,
+		"Session/Post/BogusTypeForm.status":                           http.StatusBadRequest,
+		"Session/Post/EmptyForm.status":                               http.StatusBadRequest,
+		"Session/Post/BadJSON.status":                                 http.StatusBadRequest,
+		"Session/Post/BadForm.status":                                 http.StatusBadRequest,
+		"Session/Post/MeaninglessJSON.status":                         http.StatusBadRequest,
+		"Session/Post/MeaninglessForm.status":                         http.StatusBadRequest,
+		"Session/Post/GoodJSON.status":                                http.StatusUnauthorized,
+		"Session/Post/BadQueryParam.status":                           http.StatusUnauthorized,
+		"Session/Post/BadCredsJSON.status":                            http.StatusUnauthorized,
+		"Session/Post/BadCredsForm.status":                            http.StatusUnauthorized,
+		"Session/Post/GoodCredsJSONRemoteRedirAbsolute.status":        http.StatusBadRequest,
+		"Session/Post/GoodCredsJSONRedirRelativeNoSlash.status":       http.StatusBadRequest,
+		"Session/Post/GoodCredsJSONRemoteRedirHeaderInjection.status": http.StatusBadRequest,
+		"Session/Post/GoodCredsJSONRemoteRedirInvalidURL.status":      http.StatusBadRequest,
+		"Session/Post/GoodCredsJSONRedirEmpty.status":                 http.StatusBadRequest,
+		"Session/Post/GoodCredsJSONRedirSchemaless.status":            http.StatusBadRequest,
 
 		"Stats.skip":             true, // FIXME: Unimplemented
 		"CreateDoc.skip":         true, // FIXME: Unimplemented

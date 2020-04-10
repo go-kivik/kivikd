@@ -4,10 +4,10 @@ package couchauth
 import (
 	"context"
 	"encoding/json"
+	"net/http"
 	"net/url"
 
 	"github.com/go-kivik/couchdb/chttp"
-	"github.com/go-kivik/kivik"
 	"github.com/go-kivik/kivik/errors"
 	"github.com/go-kivik/kivikd/authdb"
 )
@@ -33,7 +33,7 @@ func New(dsn string) (authdb.UserStore, error) {
 }
 
 func (c *client) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
-	req, err := c.NewRequest(ctx, kivik.MethodGet, "/_session", nil)
+	req, err := c.NewRequest(ctx, http.MethodGet, "/_session", nil)
 	if err != nil {
 		return nil, err
 	}

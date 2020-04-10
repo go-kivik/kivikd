@@ -24,7 +24,7 @@ type db interface {
 
 type backend interface {
 	AllDBs(context.Context, ...kivik.Options) ([]string, error)
-	CreateDB(context.Context, string, ...kivik.Options) (*kivik.DB, error)
+	CreateDB(context.Context, string, ...kivik.Options) error
 	DB(context.Context, string, ...kivik.Options) (db, error)
 	DBExists(context.Context, string, ...kivik.Options) (bool, error)
 }
@@ -36,7 +36,8 @@ type clientWrapper struct {
 var _ backend = &clientWrapper{}
 
 func (c *clientWrapper) DB(ctx context.Context, dbName string, options ...kivik.Options) (db, error) {
-	return c.Client.DB(ctx, dbName, options...)
+	db := c.Client.DB(ctx, dbName, options...)
+	return db, db.Err()
 }
 
 // Handler is a CouchDB server handler.

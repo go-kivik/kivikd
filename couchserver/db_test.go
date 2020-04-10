@@ -18,16 +18,16 @@ type mockCreator struct {
 	backend
 }
 
-func (p *mockCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) (*kivik.DB, error) {
-	return nil, nil
+func (p *mockCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) error {
+	return nil
 }
 
 type errCreator struct {
 	backend
 }
 
-func (p *errCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) (*kivik.DB, error) {
-	return nil, errors.New("failure")
+func (p *errCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) error {
+	return errors.New("failure")
 }
 
 func TestPutDB(t *testing.T) {
