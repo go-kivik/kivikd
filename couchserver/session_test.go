@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-kivik/kivikd/auth"
-	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/kivikd/v3/auth"
+	"github.com/go-kivik/kivikd/v3/authdb"
 	"gitlab.com/flimzy/testy"
 )
 

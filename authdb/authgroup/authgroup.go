@@ -6,9 +6,9 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kivik/errors"
-	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/kivik/v3"
+	"github.com/go-kivik/kivik/v3/errors"
+	"github.com/go-kivik/kivikd/v3/authdb"
 )
 
 // AuthGroup is a group of auth handlers, to be tried in turn.

@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	_ "github.com/go-kivik/couchdb"
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kiviktest/kt"
+	_ "github.com/go-kivik/couchdb/v3"
+	"github.com/go-kivik/kivik/v3"
+	"github.com/go-kivik/kiviktest/v3/kt"
 )
 
 type tuser struct {

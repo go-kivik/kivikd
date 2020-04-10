@@ -3,7 +3,7 @@
 # Kivikd
 
 Package kivikd aims to provide a CouchDB-compatible daemon, backed by the
-[Kivik](http://github.com/go-kivik/kivik) suite of drivers. The primary goal is
+[Kivik](http://github.com/go-kivik/kivik) v3 suite of drivers. The primary goal is
 to provide a simple stand-alone server process for testing.
 
 ## What is the development status?

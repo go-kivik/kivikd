@@ -8,9 +8,9 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/go-kivik/kivikd/auth"
-	"github.com/go-kivik/kivikd/authdb"
-	"github.com/go-kivik/kivikd/logger"
+	"github.com/go-kivik/kivikd/v3/auth"
+	"github.com/go-kivik/kivikd/v3/authdb"
+	"github.com/go-kivik/kivikd/v3/logger"
 )
 
 func TestLogger(t *testing.T) {
