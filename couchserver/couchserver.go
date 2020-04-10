@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-chi/chi"
 
-	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/v4"
 )
 
 const (

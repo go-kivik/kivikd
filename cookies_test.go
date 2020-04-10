@@ -3,7 +3,7 @@ package kivikd
 import (
 	"testing"
 
-	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/kivikd/v4/authdb"
 )
 
 type validateTest struct {

@@ -11,12 +11,12 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kivik/errors"
-	"github.com/go-kivik/kivikd/auth"
-	"github.com/go-kivik/kivikd/authdb"
-	"github.com/go-kivik/kivikd/conf"
-	"github.com/go-kivik/kivikd/logger"
+	"github.com/go-kivik/kivik/v4"
+	"github.com/go-kivik/kivik/v4/errors"
+	"github.com/go-kivik/kivikd/v4/auth"
+	"github.com/go-kivik/kivikd/v4/authdb"
+	"github.com/go-kivik/kivikd/v4/conf"
+	"github.com/go-kivik/kivikd/v4/logger"
 )
 
 // Service defines a CouchDB-like service to serve. You will define one of these

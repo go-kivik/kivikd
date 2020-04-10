@@ -4,8 +4,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-kivik/kivik"
-	_ "github.com/go-kivik/memorydb"
+	"github.com/go-kivik/kivik/v4"
+	_ "github.com/go-kivik/memorydb/v4"
 	"gitlab.com/flimzy/testy"
 )
 

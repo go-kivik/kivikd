@@ -1,8 +1,8 @@
 package kivikd
 
 import (
-	"github.com/go-kivik/kivikd/authdb"
-	"github.com/go-kivik/kivikd/cookies"
+	"github.com/go-kivik/kivikd/v4/authdb"
+	"github.com/go-kivik/kivikd/v4/cookies"
 )
 
 // CreateAuthToken hashes a user name, salt, timestamp, and the server secret

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/kivikd/v4/authdb"
 )
 
 // Handler is an auth handler.
