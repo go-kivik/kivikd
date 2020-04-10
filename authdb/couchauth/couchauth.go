@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/go-kivik/couchdb/chttp"
-	"github.com/go-kivik/kivik/errors"
-	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/couchdb/v4/chttp"
+	"github.com/go-kivik/kivik/v4/errors"
+	"github.com/go-kivik/kivikd/v4/authdb"
 )
 
 type client struct {

@@ -3,7 +3,7 @@ package couchserver
 import (
 	"testing"
 
-	"github.com/go-kivik/kivik"
+	"github.com/go-kivik/kivik/v4"
 )
 
 func TestVendor(t *testing.T) {

@@ -9,10 +9,10 @@ import (
 
 	"github.com/spf13/viper"
 
-	_ "github.com/go-kivik/couchdb"
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kivikd/authdb"
-	"github.com/go-kivik/kivikd/conf"
+	_ "github.com/go-kivik/couchdb/v4"
+	"github.com/go-kivik/kivik/v4"
+	"github.com/go-kivik/kivikd/v4/authdb"
+	"github.com/go-kivik/kivikd/v4/conf"
 )
 
 func TestInvalidHashes(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/go-kivik/kivik/errors"
+	"github.com/go-kivik/kivik/v4/errors"
 )
 
 //go:generate go-bindata -pkg couchserver -nometadata -nocompress -prefix files -o files.go files

@@ -4,9 +4,9 @@ package basic
 import (
 	"net/http"
 
-	"github.com/go-kivik/kivikd"
-	"github.com/go-kivik/kivikd/auth"
-	"github.com/go-kivik/kivikd/authdb"
+	"github.com/go-kivik/kivikd/v4"
+	"github.com/go-kivik/kivikd/v4/auth"
+	"github.com/go-kivik/kivikd/v4/authdb"
 )
 
 // HTTPBasicAuth provides HTTP Basic Auth

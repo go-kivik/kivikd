@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kivik/errors"
-	"github.com/go-kivik/kivikd/authdb"
-	"github.com/go-kivik/kivikd/conf"
+	"github.com/go-kivik/kivik/v4"
+	"github.com/go-kivik/kivik/v4/errors"
+	"github.com/go-kivik/kivikd/v4/authdb"
+	"github.com/go-kivik/kivikd/v4/conf"
 )
 
 type confadmin struct {

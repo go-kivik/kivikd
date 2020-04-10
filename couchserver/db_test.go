@@ -10,8 +10,8 @@ import (
 
 	"gitlab.com/flimzy/testy"
 
-	"github.com/go-kivik/kivik"
-	"github.com/go-kivik/kivik/errors"
+	"github.com/go-kivik/kivik/v4"
+	"github.com/go-kivik/kivik/v4/errors"
 )
 
 type mockCreator struct {
