@@ -40,7 +40,7 @@ func TestCouchAuth(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create user: %s", err)
 	}
-	defer db.Delete(context.Background(), user.ID, rev)
+	defer db.Delete(context.Background(), user.ID, rev) // nolint:errcheck
 	auth := New(db)
 	t.Run("sync", func(t *testing.T) {
 		t.Run("Validate", func(t *testing.T) {

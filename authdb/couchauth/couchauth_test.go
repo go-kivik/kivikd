@@ -46,7 +46,7 @@ func TestCouchAuth(t *testing.T) {
 	if e != nil {
 		t.Fatalf("Failed to create user: %s", e)
 	}
-	defer db.Delete(context.Background(), user.ID, rev)
+	defer db.Delete(context.Background(), user.ID, rev) // nolint:errcheck
 	auth, e := New(kt.NoAuthDSN(t))
 	if e != nil {
 		t.Fatalf("Failed to connect to remote server: %s", e)
