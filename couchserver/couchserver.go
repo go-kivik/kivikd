@@ -11,10 +11,7 @@ import (
 )
 
 const (
-	typeJSON  = "application/json"
-	typeText  = "text/plain"
-	typeForm  = "application/x-www-form-urlencoded"
-	typeMForm = "multipart/form-data"
+	typeJSON = "application/json"
 )
 
 type db interface {

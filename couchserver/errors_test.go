@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/go-kivik/kivik"
@@ -63,10 +62,6 @@ type errorResponseWriter struct {
 
 func (w *errorResponseWriter) Write(_ []byte) (int, error) {
 	return 0, errors.New("unusual write error")
-}
-
-type fileResponseWriter struct {
-	f *os.File
 }
 
 func TestHandleErrorFailure(t *testing.T) {

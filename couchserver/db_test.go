@@ -143,7 +143,7 @@ func (c *errClient) DB(_ context.Context, _ string, _ ...kivik.Options) (db, err
 func TestGetDB(t *testing.T) {
 	t.Run("Endpoint exists for GET", func(t *testing.T) {
 		h := &Handler{client: &mockGetNotFound{}}
-		resp := callEndpointEndClose(h, "GET", "/exists")
+		resp := callEndpointEndClose(h, "/exists")
 		if resp.StatusCode == http.StatusMethodNotAllowed {
 			t.Error("Expected another response than method not allowed")
 		}
@@ -151,7 +151,7 @@ func TestGetDB(t *testing.T) {
 
 	t.Run("Not found", func(t *testing.T) {
 		h := &Handler{client: &mockGetNotFound{}}
-		resp := callEndpointEndClose(h, "GET", "/notexists")
+		resp := callEndpointEndClose(h, "/notexists")
 		if resp.StatusCode != http.StatusNotFound {
 			t.Errorf("Expected 404, got %s", resp.Status)
 		}
@@ -159,7 +159,7 @@ func TestGetDB(t *testing.T) {
 
 	t.Run("Found", func(t *testing.T) {
 		h := &Handler{client: &mockGetFound{}}
-		resp := callEndpointEndClose(h, "GET", "/asdf")
+		resp := callEndpointEndClose(h, "/asdf")
 		if resp.StatusCode != http.StatusOK {
 			t.Errorf("Expected 200, got %s", resp.Status)
 		}
@@ -167,7 +167,7 @@ func TestGetDB(t *testing.T) {
 
 	t.Run("Error", func(t *testing.T) {
 		h2 := &Handler{client: &errClient{}}
-		resp := callEndpointEndClose(h2, "GET", "/error")
+		resp := callEndpointEndClose(h2, "/error")
 		if resp.StatusCode != http.StatusInternalServerError {
 			t.Errorf("Expected 500, got %s", resp.Status)
 		}
@@ -207,8 +207,8 @@ func callEndpoint(h *Handler, method string, path string) *http.Response {
 	return resp
 }
 
-func callEndpointEndClose(h *Handler, method string, path string) *http.Response {
-	resp := callEndpoint(h, method, path)
+func callEndpointEndClose(h *Handler, path string) *http.Response {
+	resp := callEndpoint(h, http.MethodGet, path)
 	resp.Body.Close()
 	return resp
 }

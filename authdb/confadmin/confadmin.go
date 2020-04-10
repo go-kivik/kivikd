@@ -26,7 +26,7 @@ func New(c *conf.Conf) authdb.UserStore {
 }
 
 func (c *confadmin) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
-	derivedKey, salt, iterations, err := c.getKeySaltIter(ctx, username)
+	derivedKey, salt, iterations, err := c.getKeySaltIter(username)
 	if err != nil {
 		if kivik.StatusCode(err) == http.StatusNotFound {
 			return nil, errors.Status(http.StatusUnauthorized, "unauthorized")
@@ -45,7 +45,7 @@ func (c *confadmin) Validate(ctx context.Context, username, password string) (*a
 
 const hashPrefix = "-" + authdb.SchemePBKDF2 + "-"
 
-func (c *confadmin) getKeySaltIter(ctx context.Context, username string) (key, salt string, iterations int, err error) {
+func (c *confadmin) getKeySaltIter(username string) (key, salt string, iterations int, err error) {
 	confName := "admins." + username
 	if !c.IsSet(confName) {
 		return "", "", 0, errors.Status(http.StatusNotFound, "user not found")
@@ -65,7 +65,7 @@ func (c *confadmin) getKeySaltIter(ctx context.Context, username string) (key, s
 }
 
 func (c *confadmin) UserCtx(ctx context.Context, username string) (*authdb.UserContext, error) {
-	_, salt, _, err := c.getKeySaltIter(ctx, username)
+	_, salt, _, err := c.getKeySaltIter(username)
 	if err != nil {
 		if kivik.StatusCode(err) == http.StatusNotFound {
 			return nil, errors.Status(http.StatusNotFound, "user does not exist")

@@ -3,7 +3,6 @@
 package cookie
 
 import (
-	"context"
 	"encoding/json"
 	"net/http"
 	"net/url"
@@ -37,13 +36,13 @@ func (a *Auth) Authenticate(w http.ResponseWriter, r *http.Request) (*authdb.Use
 		case http.MethodPost:
 			return nil, postSession(w, r)
 		case http.MethodDelete:
-			return nil, deleteSession(w, r)
+			return nil, deleteSession(w)
 		}
 	}
-	return a.validateCookie(w, r)
+	return a.validateCookie(r)
 }
 
-func (a *Auth) validateCookie(w http.ResponseWriter, r *http.Request) (*authdb.UserContext, error) {
+func (a *Auth) validateCookie(r *http.Request) (*authdb.UserContext, error) {
 	store := kivikd.GetService(r).UserStore
 	cookie, err := r.Cookie(kivik.SessionCookieName)
 	if err != nil {
@@ -97,7 +96,7 @@ func postSession(w http.ResponseWriter, r *http.Request) error {
 		Name:     kivik.SessionCookieName,
 		Value:    token,
 		Path:     "/",
-		MaxAge:   getSessionTimeout(r.Context(), s),
+		MaxAge:   getSessionTimeout(s),
 		HttpOnly: true,
 	})
 	w.Header().Add("Content-Type", typeJSON)
@@ -131,7 +130,7 @@ func redirectURL(r *http.Request) (string, error) {
 	return parsed.String(), nil
 }
 
-func deleteSession(w http.ResponseWriter, r *http.Request) error {
+func deleteSession(w http.ResponseWriter) error {
 	http.SetCookie(w, &http.Cookie{
 		Name:     kivik.SessionCookieName,
 		Value:    "",
@@ -146,7 +145,7 @@ func deleteSession(w http.ResponseWriter, r *http.Request) error {
 	})
 }
 
-func getSessionTimeout(ctx context.Context, s *kivikd.Service) int {
+func getSessionTimeout(s *kivikd.Service) int {
 	if s.Conf().IsSet("couch_httpd_auth.timeout") {
 		return s.Conf().GetInt("couch_httpd_auth.timeout")
 	}
