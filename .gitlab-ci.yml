@@ -19,7 +19,7 @@ lint:
 
 coverage:
     stage: test
-    image: golang:1.14
+    image: golang:1.21
     script:
         - go mod download
         - ./script/coverage.sh
