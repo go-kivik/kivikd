@@ -65,8 +65,8 @@ func RegisterKivikdSuites() {
 		"Put.skip": true, // FIXME: Fix this when we can write docs
 
 		"Flush.databases":                     []string{"chicken"},
-		"Flush/Admin/chicken/DoFlush.status":  http.StatusNotFound, // FIXME: Update when implemented
-		"Flush/NoAuth/chicken/DoFlush.status": http.StatusNotFound, // FIXME: Update when implemented
+		"Flush/Admin/chicken/DoFlush.status":  http.StatusNotImplemented, // FIXME: Update when implemented
+		"Flush/NoAuth/chicken/DoFlush.status": http.StatusNotImplemented, // FIXME: Update when implemented
 
 		"Delete.skip": true, // FIXME: Fix this when we can delete docs.
 
@@ -106,7 +106,7 @@ func RegisterKivikdSuites() {
 		"ViewCleanup.skip":       true, // FIXME: Unimplemented
 		"Security.skip":          true, // FIXME: Unimplemented
 		"SetSecurity.skip":       true, // FIXME: Unimplemented
-		"GetMeta.skip":           true, // FIXME: When Get works
+		"GetRev.skip":            true, // FIXME: When Get works
 		"DBUpdates.skip":         true, // FIXME: Unimplemented
 		"Changes.skip":           true, // FIXME: Unimplemented
 		"Copy.skip":              true, // FIXME: Unimplemented, depends on Get/Put or Copy
