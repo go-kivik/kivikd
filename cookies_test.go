@@ -20,10 +20,14 @@ func TestValidateCookie(t *testing.T) {
 		t.Fatal(err)
 	}
 	tests := []validateTest{
-		{Name: "Valid", Cookie: "YWRtaW46NThDNTQzN0Y6OnE2cBAuoQKvVBHF2l4PIqKHqDM", Valid: true,
-			User: &authdb.UserContext{Name: "admin", Salt: "foo bar baz"}},
-		{Name: "WrongSalt", Cookie: "YWRtaW46NThDNTQzN0Y697rnaWCa_rarAm25wbOg3Gm3mqc", Valid: false,
-			User: &authdb.UserContext{Name: "admin", Salt: "123"}},
+		{
+			Name: "Valid", Cookie: "YWRtaW46NThDNTQzN0Y6OnE2cBAuoQKvVBHF2l4PIqKHqDM", Valid: true,
+			User: &authdb.UserContext{Name: "admin", Salt: "foo bar baz"},
+		},
+		{
+			Name: "WrongSalt", Cookie: "YWRtaW46NThDNTQzN0Y697rnaWCa_rarAm25wbOg3Gm3mqc", Valid: false,
+			User: &authdb.UserContext{Name: "admin", Salt: "123"},
+		},
 	}
 	for _, test := range tests {
 		func(test validateTest) {
@@ -79,5 +83,4 @@ func TestCreateAuthToken(t *testing.T) {
 			})
 		}(test)
 	}
-
 }
