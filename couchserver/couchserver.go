@@ -32,7 +32,7 @@ type clientWrapper struct {
 
 var _ backend = &clientWrapper{}
 
-func (c *clientWrapper) DB(ctx context.Context, dbName string, options ...kivik.Option) (db, error) {
+func (c *clientWrapper) DB(_ context.Context, dbName string, options ...kivik.Option) (db, error) {
 	db := c.Client.DB(dbName, options...)
 	return db, db.Err()
 }

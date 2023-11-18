@@ -21,7 +21,7 @@ func (a *HTTPBasicAuth) MethodName() string {
 
 // Authenticate authenticates a request against a user store using HTTP Basic
 // Auth.
-func (a *HTTPBasicAuth) Authenticate(w http.ResponseWriter, r *http.Request) (*authdb.UserContext, error) {
+func (a *HTTPBasicAuth) Authenticate(_ http.ResponseWriter, r *http.Request) (*authdb.UserContext, error) {
 	store := kivikd.GetService(r).UserStore
 	username, password, ok := r.BasicAuth()
 	if !ok {

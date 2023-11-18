@@ -63,7 +63,7 @@ func (c *client) Validate(ctx context.Context, username, password string) (*auth
 	}, nil
 }
 
-func (c *client) UserCtx(ctx context.Context, username string) (*authdb.UserContext, error) {
+func (c *client) UserCtx(context.Context, string) (*authdb.UserContext, error) {
 	// var result struct {
 	// 	Ctx struct {
 	// 		Roles []string `json:"roles"`

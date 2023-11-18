@@ -3,7 +3,18 @@ format = "colored-line-number"
 
 [linters]
 enable = [
-    "interfacer", "gocyclo", "unconvert", "goimports", "unused", "varcheck",
-    "vetshadow", "misspell", "nakedret", "errcheck", "golint", "ineffassign",
-    "deadcode", "goconst", "vet", "unparam", "gofmt"
+    "gocyclo",
+    "unconvert",
+    "goimports",
+    "unused",
+    "vetshadow",
+    "misspell",
+    "nakedret",
+    "errcheck",
+    "revive",
+    "ineffassign",
+    "goconst",
+    "vet",
+    "unparam",
+    "gofumpt",
 ]

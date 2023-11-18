@@ -27,7 +27,7 @@ func New(c *conf.Conf) authdb.UserStore {
 	return &confadmin{c}
 }
 
-func (c *confadmin) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
+func (c *confadmin) Validate(_ context.Context, username, password string) (*authdb.UserContext, error) {
 	derivedKey, salt, iterations, err := c.getKeySaltIter(username)
 	if err != nil {
 		if kivik.HTTPStatus(err) == http.StatusNotFound {
@@ -66,7 +66,7 @@ func (c *confadmin) getKeySaltIter(username string) (key, salt string, iteration
 	return parts[0], parts[1], iterations, nil
 }
 
-func (c *confadmin) UserCtx(ctx context.Context, username string) (*authdb.UserContext, error) {
+func (c *confadmin) UserCtx(_ context.Context, username string) (*authdb.UserContext, error) {
 	_, salt, _, err := c.getKeySaltIter(username)
 	if err != nil {
 		if kivik.HTTPStatus(err) == http.StatusNotFound {
