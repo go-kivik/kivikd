@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/go-kivik/kivik/v4/errors"
+	"github.com/go-kivik/kivikd/v4/internal"
 )
 
 //go:generate go-bindata -pkg couchserver -nometadata -nocompress -prefix files -o files.go files
@@ -25,7 +25,7 @@ func (h *Handler) GetFavicon() http.HandlerFunc {
 			file, err := os.Open(h.Favicon)
 			if err != nil {
 				if os.IsNotExist(err) {
-					err = errors.Status(http.StatusNotFound, "not found")
+					err = &internal.Error{Status: http.StatusNotFound, Message: "not found"}
 				}
 				h.HandleError(w, err)
 				return

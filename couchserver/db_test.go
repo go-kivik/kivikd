@@ -3,6 +3,7 @@ package couchserver
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -11,7 +12,7 @@ import (
 	"gitlab.com/flimzy/testy"
 
 	"github.com/go-kivik/kivik/v4"
-	"github.com/go-kivik/kivik/v4/errors"
+	"github.com/go-kivik/kivikd/v4/internal"
 )
 
 type mockCreator struct {
@@ -131,7 +132,7 @@ func (c *mockGetFound) DB(_ context.Context, _ string, _ ...kivik.Options) (db, 
 type mockGetNotFound struct{ backend }
 
 func (c *mockGetNotFound) DB(_ context.Context, _ string, _ ...kivik.Options) (db, error) {
-	return nil, errors.Status(http.StatusNotFound, "database not found")
+	return nil, &internal.Error{Status: http.StatusNotFound, Message: "database not found"}
 }
 
 type errClient struct{ backend }

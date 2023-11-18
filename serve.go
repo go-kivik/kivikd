@@ -12,7 +12,6 @@ import (
 	"sync"
 
 	"github.com/go-kivik/kivik/v4"
-	"github.com/go-kivik/kivik/v4/errors"
 	"github.com/go-kivik/kivikd/v4/auth"
 	"github.com/go-kivik/kivikd/v4/authdb"
 	"github.com/go-kivik/kivikd/v4/conf"
@@ -158,7 +157,7 @@ func (p *perpetualAdminParty) UserCtx(_ context.Context, username string) (*auth
 func (s *Service) Bind(addr string) error {
 	port := addr[strings.LastIndex(addr, ":")+1:]
 	if _, err := strconv.Atoi(port); err != nil {
-		return errors.Wrapf(err, "invalid port '%s'", port)
+		return fmt.Errorf("invalid port '%s': %w", port, err)
 	}
 	host := strings.TrimSuffix(addr, ":"+port)
 	s.Conf().Set("httpd.bind_address", host)

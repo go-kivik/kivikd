@@ -4,11 +4,11 @@ package couchauth
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/url"
 
 	"github.com/go-kivik/couchdb/v4/chttp"
-	"github.com/go-kivik/kivik/v4/errors"
 	"github.com/go-kivik/kivikd/v4/authdb"
 )
 
