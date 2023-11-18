@@ -20,10 +20,10 @@ type db interface {
 }
 
 type backend interface {
-	AllDBs(context.Context, ...kivik.Options) ([]string, error)
-	CreateDB(context.Context, string, ...kivik.Options) error
-	DB(context.Context, string, ...kivik.Options) (db, error)
-	DBExists(context.Context, string, ...kivik.Options) (bool, error)
+	AllDBs(context.Context, ...kivik.Option) ([]string, error)
+	CreateDB(context.Context, string, ...kivik.Option) error
+	DB(context.Context, string, ...kivik.Option) (db, error)
+	DBExists(context.Context, string, ...kivik.Option) (bool, error)
 }
 
 type clientWrapper struct {
@@ -32,8 +32,8 @@ type clientWrapper struct {
 
 var _ backend = &clientWrapper{}
 
-func (c *clientWrapper) DB(ctx context.Context, dbName string, options ...kivik.Options) (db, error) {
-	db := c.Client.DB(ctx, dbName, options...)
+func (c *clientWrapper) DB(ctx context.Context, dbName string, options ...kivik.Option) (db, error) {
+	db := c.Client.DB(dbName, options...)
 	return db, db.Err()
 }
 
@@ -75,7 +75,7 @@ func (h *Handler) vendor() (compatVer, vend, ver string) {
 		vend = h.Vendor
 	}
 	if h.VendorVersion == "" {
-		ver = kivik.KivikVersion
+		ver = kivik.Version
 	} else {
 		ver = h.VendorVersion
 	}

@@ -19,7 +19,7 @@ type mockCreator struct {
 	backend
 }
 
-func (p *mockCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) error {
+func (p *mockCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Option) error {
 	return nil
 }
 
@@ -27,7 +27,7 @@ type errCreator struct {
 	backend
 }
 
-func (p *errCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Options) error {
+func (p *errCreator) CreateDB(_ context.Context, _ string, _ ...kivik.Option) error {
 	return errors.New("failure")
 }
 
@@ -56,19 +56,19 @@ func TestPutDB(t *testing.T) {
 
 type mockNotExists struct{ backend }
 
-func (d *mockNotExists) DBExists(_ context.Context, _ string, _ ...kivik.Options) (bool, error) {
+func (d *mockNotExists) DBExists(_ context.Context, _ string, _ ...kivik.Option) (bool, error) {
 	return false, nil
 }
 
 type mockExists struct{ backend }
 
-func (d *mockExists) DBExists(_ context.Context, _ string, _ ...kivik.Options) (bool, error) {
+func (d *mockExists) DBExists(_ context.Context, _ string, _ ...kivik.Option) (bool, error) {
 	return true, nil
 }
 
 type mockErrExists struct{ backend }
 
-func (d *mockErrExists) DBExists(_ context.Context, _ string, _ ...kivik.Options) (bool, error) {
+func (d *mockErrExists) DBExists(_ context.Context, _ string, _ ...kivik.Option) (bool, error) {
 	return false, errors.New("failure")
 }
 
@@ -125,19 +125,19 @@ func (d *mockFoundDB) Stats(_ context.Context) (*kivik.DBStats, error) {
 
 type mockGetFound struct{ backend }
 
-func (c *mockGetFound) DB(_ context.Context, _ string, _ ...kivik.Options) (db, error) {
+func (c *mockGetFound) DB(_ context.Context, _ string, _ ...kivik.Option) (db, error) {
 	return &mockFoundDB{}, nil
 }
 
 type mockGetNotFound struct{ backend }
 
-func (c *mockGetNotFound) DB(_ context.Context, _ string, _ ...kivik.Options) (db, error) {
+func (c *mockGetNotFound) DB(_ context.Context, _ string, _ ...kivik.Option) (db, error) {
 	return nil, &internal.Error{Status: http.StatusNotFound, Message: "database not found"}
 }
 
 type errClient struct{ backend }
 
-func (c *errClient) DB(_ context.Context, _ string, _ ...kivik.Options) (db, error) {
+func (c *errClient) DB(_ context.Context, _ string, _ ...kivik.Option) (db, error) {
 	return nil, errors.New("failure")
 }
 

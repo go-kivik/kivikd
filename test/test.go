@@ -130,7 +130,7 @@ type customDriver struct {
 	driver.Client
 }
 
-func (cd customDriver) NewClient(_ string) (driver.Client, error) {
+func (cd customDriver) NewClient(string, driver.Options) (driver.Client, error) {
 	return cd, nil
 }
 
@@ -165,10 +165,10 @@ func ServerTest(t *testing.T) {
 
 	dsn, _ := url.Parse(server.URL)
 	dsn.User = url.UserPassword("admin", "abc123")
-	clients, err := kiviktest.ConnectClients("couch", dsn.String(), t)
+	clients, err := kiviktest.ConnectClients(t, "couch", dsn.String(), nil)
 	if err != nil {
 		t.Fatalf("Failed to initialize client: %s", err)
 	}
 	clients.RW = true
-	kiviktest.RunTestsInternal(clients, kiviktest.SuiteKivikServer, t)
+	kiviktest.RunTestsInternal(clients, kiviktest.SuiteKivikServer)
 }

@@ -29,7 +29,7 @@ func (g AuthGroup) loop(ctx context.Context, fn func(authdb.UserStore) (*authdb.
 		if err == nil {
 			return uCtx, nil
 		}
-		if kivik.StatusCode(err) != http.StatusNotFound && firstErr == nil {
+		if kivik.HTTPStatus(err) != http.StatusNotFound && firstErr == nil {
 			firstErr = err
 		}
 		select {

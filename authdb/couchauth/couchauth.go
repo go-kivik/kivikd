@@ -28,12 +28,12 @@ func New(dsn string) (authdb.UserStore, error) {
 	if p.User != nil {
 		return nil, errors.New("DSN must not contain authentication credentials")
 	}
-	c, err := chttp.New(dsn)
+	c, err := chttp.New(&http.Client{}, dsn, nil)
 	return &client{c}, err
 }
 
 func (c *client) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
-	req, err := c.NewRequest(ctx, http.MethodGet, "/_session", nil)
+	req, err := c.NewRequest(ctx, http.MethodGet, "/_session", nil, nil)
 	if err != nil {
 		return nil, err
 	}

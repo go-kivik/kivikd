@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/go-kivik/kivik/v4"
+	"github.com/go-kivik/kivikd/v4/internal"
 )
 
 func errorDescription(status int) string {
@@ -35,10 +36,10 @@ func (h *Handler) HandleError(w http.ResponseWriter, err error) {
 	if err == nil {
 		return
 	}
-	status := kivik.StatusCode(err)
+	status := kivik.HTTPStatus(err)
 	w.WriteHeader(status)
 	var reason string
-	kerr := new(kivik.Error)
+	kerr := new(internal.Error)
 	if errors.As(err, &kerr) {
 		reason = kerr.Message
 	} else {

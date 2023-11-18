@@ -30,7 +30,7 @@ func New(c *conf.Conf) authdb.UserStore {
 func (c *confadmin) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
 	derivedKey, salt, iterations, err := c.getKeySaltIter(username)
 	if err != nil {
-		if kivik.StatusCode(err) == http.StatusNotFound {
+		if kivik.HTTPStatus(err) == http.StatusNotFound {
 			return nil, &internal.Error{Status: http.StatusUnauthorized, Message: "unauthorized"}
 		}
 		return nil, fmt.Errorf("unrecognized password hash: %w", err)
@@ -69,7 +69,7 @@ func (c *confadmin) getKeySaltIter(username string) (key, salt string, iteration
 func (c *confadmin) UserCtx(ctx context.Context, username string) (*authdb.UserContext, error) {
 	_, salt, _, err := c.getKeySaltIter(username)
 	if err != nil {
-		if kivik.StatusCode(err) == http.StatusNotFound {
+		if kivik.HTTPStatus(err) == http.StatusNotFound {
 			return nil, &internal.Error{Status: http.StatusNotFound, Message: "user does not exist"}
 		}
 		return nil, fmt.Errorf("unrecognized password hash: %w", err)
