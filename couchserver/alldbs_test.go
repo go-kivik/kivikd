@@ -4,9 +4,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-kivik/kivik/v4"
-	_ "github.com/go-kivik/memorydb/v4"
 	"gitlab.com/flimzy/testy"
+
+	"github.com/go-kivik/kivik/v4"
+	_ "github.com/go-kivik/kivik/v4/x/memorydb"
 )
 
 func TestAllDBs(t *testing.T) {

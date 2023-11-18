@@ -1,3 +1,4 @@
+//go:build !js
 // +build !js
 
 package test
@@ -12,18 +13,18 @@ import (
 
 	"github.com/go-kivik/kivik/v4"
 	"github.com/go-kivik/kivik/v4/driver"
+	"github.com/go-kivik/kivik/v4/kiviktest"
+	"github.com/go-kivik/kivik/v4/kiviktest/kt"
 	"github.com/go-kivik/kivikd/v4"
 	"github.com/go-kivik/kivikd/v4/auth"
 	"github.com/go-kivik/kivikd/v4/auth/basic"
 	"github.com/go-kivik/kivikd/v4/auth/cookie"
 	"github.com/go-kivik/kivikd/v4/authdb/confadmin"
 	"github.com/go-kivik/kivikd/v4/conf"
-	"github.com/go-kivik/kiviktest/v4"
-	"github.com/go-kivik/kiviktest/v4/kt"
 	"github.com/go-kivik/proxydb/v4"
 
-	_ "github.com/go-kivik/couchdb/v4"  // CouchDB driver
-	_ "github.com/go-kivik/memorydb/v4" // Memory driver
+	_ "github.com/go-kivik/kivik/v4/couchdb"    // CouchDB driver
+	_ "github.com/go-kivik/kivik/v4/x/memorydb" // Memory driver
 )
 
 // RegisterKivikdSuites registers the Kivikd related integration test suites.

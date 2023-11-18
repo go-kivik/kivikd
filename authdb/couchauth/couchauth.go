@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/go-kivik/couchdb/v4/chttp"
+	"github.com/go-kivik/kivik/v4/couchdb/chttp"
 	"github.com/go-kivik/kivikd/v4/authdb"
 )
 
