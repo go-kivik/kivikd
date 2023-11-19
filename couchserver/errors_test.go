@@ -8,7 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-kivik/kivik/v4"
+	"github.com/go-kivik/kivikd/v4/internal"
 	"gitlab.com/flimzy/testy"
 )
 
@@ -34,7 +34,7 @@ func TestHandleError(t *testing.T) {
 		},
 		{
 			Name: "kivik error",
-			Err:  &kivik.Error{HTTPStatus: http.StatusNotFound, Message: "it ain't there"},
+			Err:  &internal.Error{Status: http.StatusNotFound, Message: "it ain't there"},
 			Expected: map[string]string{
 				"error":  "not_found",
 				"reason": "it ain't there",

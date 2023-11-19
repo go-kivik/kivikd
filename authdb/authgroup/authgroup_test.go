@@ -7,13 +7,13 @@ import (
 	"reflect"
 	"testing"
 
-	_ "github.com/go-kivik/couchdb/v4"
 	"github.com/go-kivik/kivik/v4"
+	_ "github.com/go-kivik/kivik/v4/couchdb"
+	"github.com/go-kivik/kivik/v4/kiviktest/kt"
 	"github.com/go-kivik/kivikd/v4/authdb"
 	"github.com/go-kivik/kivikd/v4/authdb/confadmin"
 	"github.com/go-kivik/kivikd/v4/authdb/usersdb"
 	"github.com/go-kivik/kivikd/v4/conf"
-	"github.com/go-kivik/kiviktest/v4/kt"
 )
 
 type tuser struct {
@@ -33,7 +33,7 @@ func TestConfAdminAuth(t *testing.T) {
 
 	// Set up second auth backend
 	client := kt.GetClient(t)
-	db := client.DB(context.Background(), "_users")
+	db := client.DB("_users")
 	if e := db.Err(); e != nil {
 		t.Fatalf("Failed to connect to db: %s", e)
 	}
@@ -70,7 +70,7 @@ func TestConfAdminAuth(t *testing.T) {
 			t.Run("BobInvalid", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), "bob", "foobar")
-				if kivik.StatusCode(err) != http.StatusUnauthorized {
+				if kivik.HTTPStatus(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad password, got %s", err)
 				}
 				if uCtx != nil {
@@ -90,7 +90,7 @@ func TestConfAdminAuth(t *testing.T) {
 			t.Run("TestUserInvalid", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), user.Name, "foobar")
-				if kivik.StatusCode(err) != http.StatusUnauthorized {
+				if kivik.HTTPStatus(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad password, got %s", err)
 				}
 				if uCtx != nil {
@@ -100,7 +100,7 @@ func TestConfAdminAuth(t *testing.T) {
 			t.Run("MissingUser", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), "nobody", "foo")
-				if kivik.StatusCode(err) != http.StatusUnauthorized {
+				if kivik.HTTPStatus(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad username, got %s", err)
 				}
 				if uCtx != nil {
@@ -132,7 +132,7 @@ func TestConfAdminAuth(t *testing.T) {
 			})
 			t.Run("MissingUser", func(t *testing.T) {
 				_, err := auth.UserCtx(context.Background(), "nobody")
-				if kivik.StatusCode(err) != http.StatusNotFound {
+				if kivik.HTTPStatus(err) != http.StatusNotFound {
 					var msg string
 					if err != nil {
 						msg = fmt.Sprintf(" Got: %s", err)

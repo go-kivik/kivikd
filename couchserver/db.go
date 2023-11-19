@@ -55,7 +55,6 @@ func (h *Handler) GetDB() http.HandlerFunc {
 			h.HandleError(w, err)
 			return
 		}
-
 	}
 }
 

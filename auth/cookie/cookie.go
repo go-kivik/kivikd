@@ -10,11 +10,11 @@ import (
 	"time"
 
 	"github.com/go-kivik/kivik/v4"
-	"github.com/go-kivik/kivik/v4/errors"
 	"github.com/go-kivik/kivikd/v4"
 	"github.com/go-kivik/kivikd/v4/auth"
 	"github.com/go-kivik/kivikd/v4/authdb"
 	"github.com/go-kivik/kivikd/v4/cookies"
+	"github.com/go-kivik/kivikd/v4/internal"
 )
 
 const typeJSON = "application/json"
@@ -71,10 +71,10 @@ func postSession(w http.ResponseWriter, r *http.Request) error {
 		Password string  `form:"password" json:"password"`
 	}{}
 	if err := kivikd.BindParams(r, &authData); err != nil {
-		return errors.Status(http.StatusBadRequest, "unable to parse request data")
+		return &internal.Error{Status: http.StatusBadRequest, Message: "unable to parse request data"}
 	}
 	if authData.Name == nil {
-		return errors.Status(http.StatusBadRequest, "request body must contain a username")
+		return &internal.Error{Status: http.StatusBadRequest, Message: "request body must contain a username"}
 	}
 	s := kivikd.GetService(r)
 	user, err := s.UserStore.Validate(r.Context(), *authData.Name, authData.Password)
@@ -117,15 +117,15 @@ func redirectURL(r *http.Request) (string, error) {
 		return "", nil
 	}
 	if !strings.HasPrefix(next, "/") {
-		return "", errors.Status(http.StatusBadRequest, "redirection url must be relative to server root")
+		return "", &internal.Error{Status: http.StatusBadRequest, Message: "redirection url must be relative to server root"}
 	}
 	if strings.HasPrefix(next, "//") {
 		// Possible schemaless url
-		return "", errors.Status(http.StatusBadRequest, "invalid redirection url")
+		return "", &internal.Error{Status: http.StatusBadRequest, Message: "invalid redirection url"}
 	}
 	parsed, err := url.Parse(next)
 	if err != nil {
-		return "", errors.Status(http.StatusBadRequest, "invalid redirection url")
+		return "", &internal.Error{Status: http.StatusBadRequest, Message: "invalid redirection url"}
 	}
 	return parsed.String(), nil
 }

@@ -4,14 +4,16 @@ package confadmin
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
 
 	"github.com/go-kivik/kivik/v4"
-	"github.com/go-kivik/kivik/v4/errors"
 	"github.com/go-kivik/kivikd/v4/authdb"
 	"github.com/go-kivik/kivikd/v4/conf"
+	"github.com/go-kivik/kivikd/v4/internal"
 )
 
 type confadmin struct {
@@ -25,16 +27,16 @@ func New(c *conf.Conf) authdb.UserStore {
 	return &confadmin{c}
 }
 
-func (c *confadmin) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
+func (c *confadmin) Validate(_ context.Context, username, password string) (*authdb.UserContext, error) {
 	derivedKey, salt, iterations, err := c.getKeySaltIter(username)
 	if err != nil {
-		if kivik.StatusCode(err) == http.StatusNotFound {
-			return nil, errors.Status(http.StatusUnauthorized, "unauthorized")
+		if kivik.HTTPStatus(err) == http.StatusNotFound {
+			return nil, &internal.Error{Status: http.StatusUnauthorized, Message: "unauthorized"}
 		}
-		return nil, errors.Wrap(err, "unrecognized password hash")
+		return nil, fmt.Errorf("unrecognized password hash: %w", err)
 	}
 	if !authdb.ValidatePBKDF2(password, salt, derivedKey, iterations) {
-		return nil, errors.Status(http.StatusUnauthorized, "unauthorized")
+		return nil, &internal.Error{Status: http.StatusUnauthorized, Message: "unauthorized"}
 	}
 	return &authdb.UserContext{
 		Name:  username,
@@ -48,7 +50,7 @@ const hashPrefix = "-" + authdb.SchemePBKDF2 + "-"
 func (c *confadmin) getKeySaltIter(username string) (key, salt string, iterations int, err error) {
 	confName := "admins." + username
 	if !c.IsSet(confName) {
-		return "", "", 0, errors.Status(http.StatusNotFound, "user not found")
+		return "", "", 0, &internal.Error{Status: http.StatusNotFound, Message: "user not found"}
 	}
 	hash := c.GetString(confName)
 	if !strings.HasPrefix(hash, hashPrefix) {
@@ -64,13 +66,13 @@ func (c *confadmin) getKeySaltIter(username string) (key, salt string, iteration
 	return parts[0], parts[1], iterations, nil
 }
 
-func (c *confadmin) UserCtx(ctx context.Context, username string) (*authdb.UserContext, error) {
+func (c *confadmin) UserCtx(_ context.Context, username string) (*authdb.UserContext, error) {
 	_, salt, _, err := c.getKeySaltIter(username)
 	if err != nil {
-		if kivik.StatusCode(err) == http.StatusNotFound {
-			return nil, errors.Status(http.StatusNotFound, "user does not exist")
+		if kivik.HTTPStatus(err) == http.StatusNotFound {
+			return nil, &internal.Error{Status: http.StatusNotFound, Message: "user does not exist"}
 		}
-		return nil, errors.Wrap(err, "unrecognized password hash")
+		return nil, fmt.Errorf("unrecognized password hash: %w", err)
 	}
 	return &authdb.UserContext{
 		Name:  username,

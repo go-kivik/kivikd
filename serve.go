@@ -12,10 +12,10 @@ import (
 	"sync"
 
 	"github.com/go-kivik/kivik/v4"
-	"github.com/go-kivik/kivik/v4/errors"
 	"github.com/go-kivik/kivikd/v4/auth"
 	"github.com/go-kivik/kivikd/v4/authdb"
 	"github.com/go-kivik/kivikd/v4/conf"
+	"github.com/go-kivik/kivikd/v4/internal"
 	"github.com/go-kivik/kivikd/v4/logger"
 )
 
@@ -158,7 +158,7 @@ func (p *perpetualAdminParty) UserCtx(_ context.Context, username string) (*auth
 func (s *Service) Bind(addr string) error {
 	port := addr[strings.LastIndex(addr, ":")+1:]
 	if _, err := strconv.Atoi(port); err != nil {
-		return errors.Wrapf(err, "invalid port '%s'", port)
+		return fmt.Errorf("invalid port '%s': %w", port, err)
 	}
 	host := strings.TrimSuffix(addr, ":"+port)
 	s.Conf().Set("httpd.bind_address", host)
@@ -174,7 +174,7 @@ const (
 )
 
 func reason(err error) string {
-	kerr := new(kivik.Error)
+	kerr := new(internal.Error)
 	if errs.As(err, &kerr) {
 		return kerr.Message
 	}
@@ -183,7 +183,7 @@ func reason(err error) string {
 
 func reportError(w http.ResponseWriter, err error) {
 	w.Header().Add("Content-Type", typeJSON)
-	status := kivik.StatusCode(err)
+	status := kivik.HTTPStatus(err)
 	w.WriteHeader(status)
 	short := err.Error()
 	reason := reason(err)

@@ -13,11 +13,11 @@ func TestVendor(t *testing.T) {
 		if c != CompatVersion {
 			t.Errorf("CompatVer Expected: %s\n  CompatVer Actual: %s", CompatVersion, c)
 		}
-		if v != kivik.KivikVendor {
-			t.Errorf("Vendor Expected: %s\n  Vendor Actual: %s", kivik.KivikVendor, v)
+		if want := "Kivik"; v != want {
+			t.Errorf("Vendor Expected: %s\n  Vendor Actual: %s", want, v)
 		}
-		if vv != kivik.KivikVersion {
-			t.Errorf("Vendor Version Expected: %s\n  Vendor Version Actual: %s", kivik.KivikVersion, vv)
+		if vv != kivik.Version {
+			t.Errorf("Vendor Version Expected: %s\n  Vendor Version Actual: %s", kivik.Version, vv)
 		}
 	})
 	t.Run("Set", func(t *testing.T) {

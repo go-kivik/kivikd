@@ -1,3 +1,4 @@
+//go:build !js
 // +build !js
 
 package test
@@ -12,18 +13,18 @@ import (
 
 	"github.com/go-kivik/kivik/v4"
 	"github.com/go-kivik/kivik/v4/driver"
+	"github.com/go-kivik/kivik/v4/kiviktest"
+	"github.com/go-kivik/kivik/v4/kiviktest/kt"
 	"github.com/go-kivik/kivikd/v4"
 	"github.com/go-kivik/kivikd/v4/auth"
 	"github.com/go-kivik/kivikd/v4/auth/basic"
 	"github.com/go-kivik/kivikd/v4/auth/cookie"
 	"github.com/go-kivik/kivikd/v4/authdb/confadmin"
 	"github.com/go-kivik/kivikd/v4/conf"
-	"github.com/go-kivik/kiviktest/v4"
-	"github.com/go-kivik/kiviktest/v4/kt"
 	"github.com/go-kivik/proxydb/v4"
 
-	_ "github.com/go-kivik/couchdb/v4"  // CouchDB driver
-	_ "github.com/go-kivik/memorydb/v4" // Memory driver
+	_ "github.com/go-kivik/kivik/v4/couchdb"    // CouchDB driver
+	_ "github.com/go-kivik/kivik/v4/x/memorydb" // Memory driver
 )
 
 // RegisterKivikdSuites registers the Kivikd related integration test suites.
@@ -64,8 +65,8 @@ func RegisterKivikdSuites() {
 		"Put.skip": true, // FIXME: Fix this when we can write docs
 
 		"Flush.databases":                     []string{"chicken"},
-		"Flush/Admin/chicken/DoFlush.status":  http.StatusNotFound, // FIXME: Update when implemented
-		"Flush/NoAuth/chicken/DoFlush.status": http.StatusNotFound, // FIXME: Update when implemented
+		"Flush/Admin/chicken/DoFlush.status":  http.StatusNotImplemented, // FIXME: Update when implemented
+		"Flush/NoAuth/chicken/DoFlush.status": http.StatusNotImplemented, // FIXME: Update when implemented
 
 		"Delete.skip": true, // FIXME: Fix this when we can delete docs.
 
@@ -105,7 +106,7 @@ func RegisterKivikdSuites() {
 		"ViewCleanup.skip":       true, // FIXME: Unimplemented
 		"Security.skip":          true, // FIXME: Unimplemented
 		"SetSecurity.skip":       true, // FIXME: Unimplemented
-		"GetMeta.skip":           true, // FIXME: When Get works
+		"GetRev.skip":            true, // FIXME: When Get works
 		"DBUpdates.skip":         true, // FIXME: Unimplemented
 		"Changes.skip":           true, // FIXME: Unimplemented
 		"Copy.skip":              true, // FIXME: Unimplemented, depends on Get/Put or Copy
@@ -129,7 +130,7 @@ type customDriver struct {
 	driver.Client
 }
 
-func (cd customDriver) NewClient(_ string) (driver.Client, error) {
+func (cd customDriver) NewClient(string, driver.Options) (driver.Client, error) {
 	return cd, nil
 }
 
@@ -164,10 +165,10 @@ func ServerTest(t *testing.T) {
 
 	dsn, _ := url.Parse(server.URL)
 	dsn.User = url.UserPassword("admin", "abc123")
-	clients, err := kiviktest.ConnectClients("couch", dsn.String(), t)
+	clients, err := kiviktest.ConnectClients(t, "couch", dsn.String(), nil)
 	if err != nil {
 		t.Fatalf("Failed to initialize client: %s", err)
 	}
 	clients.RW = true
-	kiviktest.RunTestsInternal(clients, kiviktest.SuiteKivikServer, t)
+	kiviktest.RunTestsInternal(clients, kiviktest.SuiteKivikServer)
 }

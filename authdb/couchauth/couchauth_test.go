@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	_ "github.com/go-kivik/couchdb/v4"
 	"github.com/go-kivik/kivik/v4"
-	"github.com/go-kivik/kiviktest/v4/kt"
+	_ "github.com/go-kivik/kivik/v4/couchdb"
+	"github.com/go-kivik/kivik/v4/kiviktest/kt"
 )
 
 type tuser struct {
@@ -30,7 +30,7 @@ func TestBadDSN(t *testing.T) {
 func TestCouchAuth(t *testing.T) {
 	t.Skip("Reconfigure test not to require Docker")
 	client := kt.GetClient(t)
-	db := client.DB(context.Background(), "_users")
+	db := client.DB("_users")
 	if e := db.Err(); e != nil {
 		t.Fatalf("Failed to connect to db: %s", e)
 	}
@@ -67,7 +67,7 @@ func TestCouchAuth(t *testing.T) {
 			t.Run("WrongPassword", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), user.Name, "foobar")
-				if kivik.StatusCode(err) != http.StatusUnauthorized {
+				if kivik.HTTPStatus(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad password, got %s", err)
 				}
 				if uCtx != nil {
@@ -77,7 +77,7 @@ func TestCouchAuth(t *testing.T) {
 			t.Run("MissingUser", func(t *testing.T) {
 				t.Parallel()
 				uCtx, err := auth.Validate(context.Background(), "nobody", "foo")
-				if kivik.StatusCode(err) != http.StatusUnauthorized {
+				if kivik.HTTPStatus(err) != http.StatusUnauthorized {
 					t.Errorf("Expected Unauthorized for bad username, got %s", err)
 				}
 				if uCtx != nil {

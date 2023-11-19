@@ -4,11 +4,11 @@ package couchauth
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/url"
 
-	"github.com/go-kivik/couchdb/v4/chttp"
-	"github.com/go-kivik/kivik/v4/errors"
+	"github.com/go-kivik/kivik/v4/couchdb/chttp"
 	"github.com/go-kivik/kivikd/v4/authdb"
 )
 
@@ -28,12 +28,12 @@ func New(dsn string) (authdb.UserStore, error) {
 	if p.User != nil {
 		return nil, errors.New("DSN must not contain authentication credentials")
 	}
-	c, err := chttp.New(dsn)
+	c, err := chttp.New(&http.Client{}, dsn, nil)
 	return &client{c}, err
 }
 
 func (c *client) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
-	req, err := c.NewRequest(ctx, http.MethodGet, "/_session", nil)
+	req, err := c.NewRequest(ctx, http.MethodGet, "/_session", nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (c *client) Validate(ctx context.Context, username, password string) (*auth
 	}, nil
 }
 
-func (c *client) UserCtx(ctx context.Context, username string) (*authdb.UserContext, error) {
+func (c *client) UserCtx(context.Context, string) (*authdb.UserContext, error) {
 	// var result struct {
 	// 	Ctx struct {
 	// 		Roles []string `json:"roles"`

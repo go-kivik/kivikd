@@ -4,14 +4,15 @@ package usersdb
 import (
 	"context"
 	"crypto/sha1"
+	"errors"
 	"fmt"
 	"net/http"
 
 	"golang.org/x/crypto/pbkdf2"
 
 	"github.com/go-kivik/kivik/v4"
-	"github.com/go-kivik/kivik/v4/errors"
 	"github.com/go-kivik/kivikd/v4/authdb"
+	"github.com/go-kivik/kivikd/v4/internal"
 )
 
 type db struct {
@@ -45,8 +46,8 @@ func (db *db) getUser(ctx context.Context, username string) (*user, error) {
 func (db *db) Validate(ctx context.Context, username, password string) (*authdb.UserContext, error) {
 	u, err := db.getUser(ctx, username)
 	if err != nil {
-		if kivik.StatusCode(err) == http.StatusNotFound {
-			err = errors.Status(http.StatusUnauthorized, "unauthorized")
+		if kivik.HTTPStatus(err) == http.StatusNotFound {
+			err = &internal.Error{Status: http.StatusUnauthorized, Message: "unauthorized"}
 		}
 		return nil, err
 	}
@@ -56,11 +57,11 @@ func (db *db) Validate(ctx context.Context, username, password string) (*authdb.
 		return nil, errors.New("no password scheme set for user")
 	case authdb.SchemePBKDF2:
 	default:
-		return nil, errors.Errorf("unsupported password scheme: %s", u.PasswordScheme)
+		return nil, fmt.Errorf("unsupported password scheme: %s", u.PasswordScheme)
 	}
 	key := fmt.Sprintf("%x", pbkdf2.Key([]byte(password), []byte(u.Salt), u.Iterations, authdb.PBKDF2KeyLength, sha1.New))
 	if key != u.DerivedKey {
-		return nil, errors.Status(http.StatusUnauthorized, "unauthorized")
+		return nil, &internal.Error{Status: http.StatusUnauthorized, Message: "unauthorized"}
 	}
 	return &authdb.UserContext{
 		Name:  u.Name,

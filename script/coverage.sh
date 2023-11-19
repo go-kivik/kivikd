@@ -21,7 +21,7 @@ echo "" > coverage.txt
 TEST_PKGS=$(go list ./... | grep -v /test)
 
 # Cache
-go test -i -cover -covermode=set $(go list ./...)
+go test -cover -covermode=set $(go list ./...)
 
 for pkg in $TEST_PKGS; do
     go test \
