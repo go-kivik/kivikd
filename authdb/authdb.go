@@ -91,7 +91,7 @@ func (c *UserContext) MarshalJSON() ([]byte, error) {
 // token creation time. To validate the authenticity of the token, use
 // ValidatePBKDF2().
 func DecodeAuthToken(token string) (username string, created time.Time, err error) {
-	payload, err := base64.RawURLEncoding.DecodeString(token)
+	payload, err := base64.RawURLEncoding.WithPadding(base64.NoPadding).DecodeString(token)
 	if err != nil {
 		return username, created, err
 	}
